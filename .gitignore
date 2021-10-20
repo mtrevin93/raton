@@ -389,7 +389,7 @@ FodyWeavers.xsd
 
 
 # API Keys
-Raton/client/src/modules/.env
+.env.local
 appsettings.json
 Raton/Raton.csproj
 

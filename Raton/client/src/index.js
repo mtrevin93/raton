@@ -1,10 +1,10 @@
+import firebase from "firebase/compat/app";
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import * as serviceWorker from './serviceWorker';
-import firebase from "firebase/compat/app";
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_API_KEY,

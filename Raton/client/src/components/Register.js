@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, FormGroup, Input } from '@mui/material';
+import { Button, FormGroup, Input, FormLabel, FormControl } from '@mui/material';
 import { useHistory } from "react-router-dom";
 import { register } from "../modules/authManager";
 
@@ -26,40 +26,40 @@ export default function Register() {
  };
 
   return (
-    <Form onSubmit={registerClick}>
+    <FormControl onSubmit={registerClick}>
       <fieldset>
         <FormGroup>
-          <Label htmlFor="firstName">First Name</Label>
+          <FormLabel htmlFor="firstName">First Name</FormLabel>
           <Input id="firstName" type="text" onChange={e => setFirstName(e.target.value)} />
         </FormGroup>
         <FormGroup>
-          <Label htmlFor="lastName">Last Name</Label>
+          <FormLabel htmlFor="lastName">Last Name</FormLabel>
           <Input id="lastName" type="text" onChange={e => setLastName(e.target.value)} />
         </FormGroup>
         <FormGroup>
-          <Label htmlFor="displayName">Display Name</Label>
+          <FormLabel htmlFor="displayName">Display Name</FormLabel>
           <Input id="displayName" type="text" onChange={e => setDisplayName(e.target.value)} />
         </FormGroup>
         <FormGroup>
-          <Label for="email">Email</Label>
+          <FormLabel for="email">Email</FormLabel>
           <Input id="email" type="text" onChange={e => setEmail(e.target.value)} />
         </FormGroup>
         <FormGroup>
-          <Label htmlFor="imageLocation">Profile Image URL</Label>
+          <FormLabel htmlFor="imageLocation">Profile Image URL</FormLabel>
           <Input id="imageLocation" type="text" onChange={e => setImageLocation(e.target.value)} />
         </FormGroup>
         <FormGroup>
-          <Label for="password">Password</Label>
+          <FormLabel for="password">Password</FormLabel>
           <Input id="password" type="password" onChange={e => setPassword(e.target.value)} />
         </FormGroup>
         <FormGroup>
-          <Label for="confirmPassword">Confirm Password</Label>
+          <FormLabel for="confirmPassword">Confirm Password</FormLabel>
           <Input id="confirmPassword" type="password" onChange={e => setConfirmPassword(e.target.value)} />
         </FormGroup>
         <FormGroup>
           <Button>Register</Button>
         </FormGroup>
       </fieldset>
-    </Form>
+    </FormControl>
   );
 }

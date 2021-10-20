@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Button, FormGroup,  Input } from '@mui/material';
-import { useHistory, Link } from "react-router-dom";
+import { Button, FormGroup,  FormControl, FormLabel, TextField } from '@mui/material';
+import { useHistory, Link, Rout, BrowserRouter } from "react-router-dom";
 import { login } from "../modules/authManager";
 
 export default function Login() {
@@ -17,23 +17,25 @@ export default function Login() {
   };
 
   return (
-    <Form onSubmit={loginSubmit}>
+    <FormControl onSubmit={loginSubmit}>
       <fieldset>
         <FormGroup>
-          <Label for="email">Email</Label>
-          <Input id="email" type="text" autoFocus onChange={e => setEmail(e.target.value)} />
+          <FormLabel for="email">Email</FormLabel>
+          <TextField id="email" type="text" autoFocus onChange={e => setEmail(e.target.value)} />
         </FormGroup>
         <FormGroup>
-          <Label for="password">Password</Label>
-          <Input id="password" type="password" onChange={e => setPassword(e.target.value)} />
+          <FormLabel for="password">Password</FormLabel>
+          <TextField id="password" type="password" onChange={e => setPassword(e.target.value)} />
         </FormGroup>
         <FormGroup>
           <Button>Login</Button>
         </FormGroup>
         <em>
+            <BrowserRouter>
           Not registered? <Link to="register">Register</Link>
+            </BrowserRouter>
         </em>
       </fieldset>
-    </Form>
+    </FormControl>
   );
 }

@@ -11,8 +11,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Streamish.Repositories;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
-namespace Raton
+namespace Streamish
 {
     public class Startup
     {
@@ -32,6 +35,24 @@ namespace Raton
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Raton", Version = "v1" });
             });
+            services.AddTransient<IUserProfileRepository, UserProfileRepository>();
+
+            var firebaseProjectId = Configuration.GetValue<string>("FirebaseProjectId");
+            var googleTokenUrl = $"https://securetoken.google.com/{firebaseProjectId}";
+            Microsoft.AspNetCore.Authentication.AuthenticationBuilder authenticationBuilder = services
+                .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.Authority = googleTokenUrl;
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidIssuer = googleTokenUrl,
+                        ValidateAudience = true,
+                        ValidAudience = firebaseProjectId,
+                        ValidateLifetime = true
+                    };
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,6 +63,14 @@ namespace Raton
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Raton v1"));
+
+                // Do not block requests while in development
+                app.UseCors(options =>
+                {
+                    options.AllowAnyOrigin();
+                    options.AllowAnyMethod();
+                    options.AllowAnyHeader();
+                });
             }
 
             app.UseHttpsRedirection();
@@ -54,6 +83,10 @@ namespace Raton
             {
                 endpoints.MapControllers();
             });
+
+            app.UseRouting();
+            app.UseAuthentication();
+            app.UseAuthorization();
         }
     }
 }

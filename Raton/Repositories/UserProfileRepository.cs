@@ -8,7 +8,7 @@ using Raton.Utils;
 namespace Raton.Repositories
 {
 
-    public class UserProfileRepository : BaseRepository, IUserProfileRepository, IUserProfileRepository
+    public class UserProfileRepository : BaseRepository, IUserProfileRepository
     {
         public UserProfileRepository(IConfiguration configuration) : base(configuration) { }
 

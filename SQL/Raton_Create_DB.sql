@@ -1,0 +1,123 @@
+use [master]
+
+IF db_id('Raton') IS NULL
+CREATE DATABASE [Raton]
+GO
+
+USE [RATON]
+GO
+
+DROP TABLE IF EXISTS [UserType]
+DROP TABLE IF EXISTS [UserWord]
+DROP TABLE IF EXISTS [Translations]
+DROP TABLE IF EXISTS [TextWord]
+DROP TABLE IF EXISTS [TextTag]
+DROP TABLE IF EXISTS [UserText]
+DROP TABLE IF EXISTS [User]
+DROP TABLE IF EXISTS [Word]
+DROP TABLE IF EXISTS [Text]
+DROP TABLE IF EXISTS [Tag]
+
+CREATE TABLE [User] (
+  [Id] int PRIMARY KEY IDENTITY,
+  [Username] nvarchar(255) NOT NULL,
+  [FirebaseId] nvarchar(255) NOT NULL,
+  [AvatarImg] nvarchar(255),
+  [Bio] nvarchar(255),
+  [UserTypeId] int NOT NULL
+)
+GO
+
+CREATE TABLE [UserType] (
+  [Id] int PRIMARY KEY IDENTITY,
+  [TypeName] nvarchar(255) NOT NULL
+)
+GO
+
+CREATE TABLE [UserWord] (
+  [Id] int PRIMARY KEY IDENTITY,
+  [UserId] int NOT NULL,
+  [WordId] int NOT NULL
+)
+GO
+
+CREATE TABLE [Word] (
+  [Id] int PRIMARY KEY IDENTITY,
+  [SpanishWord] nvarchar(255) NOT NULL
+)
+GO
+
+CREATE TABLE [Translations] (
+  [Id] int PRIMARY KEY IDENTITY,
+  [WordId] int NOT NULL,
+  [Translation] nvarchar(255) NOT NULL
+)
+GO
+
+CREATE TABLE [Text] (
+  [Id] int PRIMARY KEY IDENTITY,
+  [Title] Varchar NOT NULL,
+  [Description] Varchar NOT NULL,
+  [HeaderImg] nvarchar(255) NOT NULL,
+  [Content] nvarchar(max) NOT NULL,
+  [DatePosted] datetime NOT NULL
+)
+GO
+
+CREATE TABLE [TextWord] (
+  [Id] int PRIMARY KEY IDENTITY,
+  [WordId] int NOT NULL,
+  [TextId] int NOT NULL
+)
+GO
+
+CREATE TABLE [Tag] (
+  [Id] int PRIMARY KEY IDENTITY,
+  [TagName] nvarchar(255) NOT NULL
+)
+GO
+
+CREATE TABLE [TextTag] (
+  [Id] int PRIMARY KEY IDENTITY,
+  [TextId] int NOT NULL,
+  [TagId] int NOT NULL
+)
+GO
+
+CREATE TABLE [UserText] (
+  [Id] int IDENTITY,
+  [UserId] int,
+  [TextId] int,
+  [PageFinished] int
+)
+GO
+
+ALTER TABLE [UserWord] ADD FOREIGN KEY ([UserId]) REFERENCES [User] ([Id]) ON DELETE CASCADE ON UPDATE NO ACTION
+GO
+
+ALTER TABLE [UserWord] ADD FOREIGN KEY ([WordId]) REFERENCES [Word] ([Id]) ON DELETE CASCADE ON UPDATE NO ACTION
+GO
+
+ALTER TABLE [TextWord] ADD FOREIGN KEY ([WordId]) REFERENCES [Word] ([Id]) ON DELETE CASCADE ON UPDATE NO ACTION
+GO
+
+ALTER TABLE [TextWord] ADD FOREIGN KEY ([TextId]) REFERENCES [Text] ([Id]) ON DELETE CASCADE ON UPDATE NO ACTION
+GO
+
+ALTER TABLE [TextTag] ADD FOREIGN KEY ([TextId]) REFERENCES [Text] ([Id]) ON DELETE CASCADE ON UPDATE NO ACTION
+GO
+
+ALTER TABLE [TextTag] ADD FOREIGN KEY ([TagId]) REFERENCES [Tag] ([Id]) ON DELETE CASCADE ON UPDATE NO ACTION
+GO
+
+ALTER TABLE [UserText] ADD FOREIGN KEY ([TextId]) REFERENCES [Text] ([Id]) ON DELETE CASCADE ON UPDATE NO ACTION
+GO
+
+ALTER TABLE [UserText] ADD FOREIGN KEY ([UserId]) REFERENCES [User] ([Id]) ON DELETE CASCADE ON UPDATE NO ACTION
+GO
+
+ALTER TABLE [User] ADD FOREIGN KEY ([UserTypeId]) REFERENCES [UserType] ([Id])
+GO
+
+ALTER TABLE [Translations] ADD FOREIGN KEY ([WordId]) REFERENCES [Word] ([Id]) ON DELETE CASCADE ON UPDATE NO ACTION
+GO

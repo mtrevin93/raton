@@ -24,7 +24,8 @@ CREATE TABLE [User] (
   [FirebaseId] nvarchar(255) NOT NULL,
   [AvatarImg] nvarchar(255),
   [Bio] nvarchar(255),
-  [UserTypeId] int NOT NULL
+  [UserTypeId] int NOT NULL,
+  [Email] nvarchar(255) NOT NULL
 )
 GO
 

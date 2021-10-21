@@ -17,7 +17,6 @@ namespace Raton.Models
         public string ImageUrl { get; set; }
 
         public DateTime DateCreated { get; set; }
-        public List<Video> Videos { get; set; }
 
         public string FirebaseUserId { get; set; }
 

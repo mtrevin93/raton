@@ -88,20 +88,8 @@ namespace Raton.Repositories
                         if (userProfile == null)
                         {
                             userProfile = GetUserProfileFromReader(reader);
-                            userProfile.Videos = new List<Video>();
                         }
 
-                        if (DbUtils.IsNotDbNull(reader, "Title"))
-                        {
-                            Video v = new Video
-                            {
-                                Title = DbUtils.GetString(reader, "Title"),
-                                Description = DbUtils.GetString(reader, "Description"),
-                                Url = DbUtils.GetString(reader, "Url"),
-                                DateCreated = DbUtils.GetDateTime(reader, "DateCreated"),
-                            };
-                            userProfile.Videos.Add(v);
-                        }
                     }
 
                     reader.Close();

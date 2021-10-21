@@ -10,7 +10,6 @@ namespace Raton.Repositories
         List<UserProfile> GetAll();
         UserProfile GetByFirebaseUserId(string firebaseUserId);
         UserProfile GetById(int id);
-        UserProfile GetByIdWithVideos(int id);
         void Update(UserProfile userProfile);
     }
 }

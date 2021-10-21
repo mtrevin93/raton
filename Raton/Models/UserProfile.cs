@@ -9,16 +9,17 @@ namespace Raton.Models
         public int Id { get; set; }
 
         [Required]
-        public string Name { get; set; }
+        public string Username { get; set; }
 
         [Required]
         public string Email { get; set; }
 
-        public string ImageUrl { get; set; }
+        public string AvatarImg { get; set; }
 
-        public DateTime DateCreated { get; set; }
+        public string Bio { get; set; }
 
         public string FirebaseUserId { get; set; }
+        public UserType UserType { get; set; }
 
     }
 }

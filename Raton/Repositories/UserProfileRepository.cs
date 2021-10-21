@@ -19,7 +19,9 @@ namespace Raton.Repositories
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"SELECT * FROM UserProfile";
+                    cmd.CommandText = @"SELECT u.*, ut.TypeName 
+                                        FROM [User] u 
+                                        JOIN UserType ut ON u.UserTypeId = ut.Id;";
 
                     var reader = cmd.ExecuteReader();
 
@@ -43,7 +45,10 @@ namespace Raton.Repositories
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"SELECT * FROM UserProfile WHERE Id = @id";
+                    cmd.CommandText = @"SELECT u.*, ut.TypeName 
+                                        FROM [User] u 
+                                        JOIN UserType ut ON u.UserTypeId = ut.Id; 
+                                        WHERE Id = @id";
 
                     DbUtils.AddParameter(cmd, "@Id", id);
 
@@ -54,42 +59,6 @@ namespace Raton.Repositories
                     if (reader.Read())
                     {
                         userProfile = GetUserProfileFromReader(reader);
-                    }
-
-                    reader.Close();
-
-                    return userProfile;
-                }
-            }
-        }
-
-        public UserProfile GetByIdWithVideos(int id)
-        {
-            using (var conn = Connection)
-            {
-                conn.Open();
-                using (var cmd = conn.CreateCommand())
-                {
-                    cmd.CommandText = @"SELECT up.Id AS UserProfileId, up.Name, up.Email, up.ImageUrl, up.DateCreated,
-                                        v.Title, v.Description, v.Url, v.DateCreated, v.UserProfileId
-                                        FROM UserProfile up
-                                        LEFT JOIN Video v
-                                        ON v.UserProfileId = up.Id 
-                                        WHERE UserProfileId = @Id";
-
-                    DbUtils.AddParameter(cmd, "@Id", id);
-
-                    var reader = cmd.ExecuteReader();
-
-                    UserProfile userProfile = null;
-
-                    while (reader.Read())
-                    {
-                        if (userProfile == null)
-                        {
-                            userProfile = GetUserProfileFromReader(reader);
-                        }
-
                     }
 
                     reader.Close();
@@ -110,9 +79,9 @@ namespace Raton.Repositories
                         INSERT INTO UserProfile (Name, Email, ImageUrl, DateCreated)
                         VALUES (@name, @email, @imageUrl, SYSDATETIME() )";
 
-                    DbUtils.AddParameter(cmd, "@name", userProfile.Name);
+                    DbUtils.AddParameter(cmd, "@name", userProfile.Username);
                     DbUtils.AddParameter(cmd, "@email", userProfile.Email);
-                    DbUtils.AddParameter(cmd, "@imageUrl", userProfile.ImageUrl);
+                    DbUtils.AddParameter(cmd, "@imageUrl", userProfile.AvatarImg);
 
                     cmd.ExecuteNonQuery();
                 }
@@ -133,9 +102,9 @@ namespace Raton.Repositories
                                        ImageUrl = @imageUrl
                                  WHERE Id = @Id";
 
-                    DbUtils.AddParameter(cmd, "@name", userProfile.Name);
+                    DbUtils.AddParameter(cmd, "@name", userProfile.Username);
                     DbUtils.AddParameter(cmd, "@email", userProfile.Email);
-                    DbUtils.AddParameter(cmd, "@imageUrl", userProfile.ImageUrl);
+                    DbUtils.AddParameter(cmd, "@imageUrl", userProfile.AvatarImg);
                     DbUtils.AddParameter(cmd, "@Id", userProfile.Id);
 
                     cmd.ExecuteNonQuery();
@@ -156,17 +125,6 @@ namespace Raton.Repositories
                 }
             }
         }
-
-        private UserProfile GetUserProfileFromReader(SqlDataReader reader)
-        {
-            return new UserProfile()
-            {
-                Name = DbUtils.GetString(reader, "Name"),
-                Email = DbUtils.GetString(reader, "Email"),
-                ImageUrl = DbUtils.GetString(reader, "ImageUrl"),
-                DateCreated = DbUtils.GetDateTime(reader, "DateCreated")
-            };
-        }
         public UserProfile GetByFirebaseUserId(string firebaseUserId)
         {
             using (var conn = Connection)
@@ -174,33 +132,35 @@ namespace Raton.Repositories
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"
-                        SELECT up.Id, Up.FirebaseUserId, up.Name AS UserProfileName, up.Email,
-                               ut.Name AS UserTypeName
-                          FROM UserProfile up
-                               LEFT JOIN UserType ut on up.UserTypeId = ut.Id
-                         WHERE FirebaseUserId = @FirebaseuserId";
+                    cmd.CommandText = @"SELECT u.*, ut.TypeName 
+                                       FROM [User] u JOIN UserType ut ON u.UserTypeId = ut.Id
+                                       WHERE FirebaseId = @FirebaseId";
 
-                    DbUtils.AddParameter(cmd, "@FirebaseUserId", firebaseUserId);
+                    DbUtils.AddParameter(cmd, "@FirebaseId", firebaseUserId);
 
                     UserProfile userProfile = null;
 
                     var reader = cmd.ExecuteReader();
                     if (reader.Read())
                     {
-                        userProfile = new UserProfile()
-                        {
-                            Id = DbUtils.GetInt(reader, "Id"),
-                            FirebaseUserId = DbUtils.GetString(reader, "FirebaseUserId"),
-                            Name = DbUtils.GetString(reader, "UserProfileName"),
-                            Email = DbUtils.GetString(reader, "Email"),
-                        };
+                        userProfile = GetUserProfileFromReader(reader);
                     }
                     reader.Close();
 
                     return userProfile;
                 }
             }
+        }
+        private UserProfile GetUserProfileFromReader(SqlDataReader reader)
+        {
+            return new UserProfile()
+            {
+                Username = DbUtils.GetString(reader, "Username"),
+                Email = DbUtils.GetString(reader, "Email"),
+                AvatarImg = DbUtils.GetString(reader, "AvatarImg"),
+                Bio = DbUtils.GetString(reader, "Bio"),
+                UserType = new UserType { TypeName = DbUtils.GetString(reader, "TypeName") }
+            };
         }
     }
 }

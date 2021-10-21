@@ -10,6 +10,7 @@ export default function Login() {
   const [password, setPassword] = useState();
 
   const loginSubmit = (e) => {
+    console.log("click");
     e.preventDefault();
     login(email, password)
       .then(() => history.push("/"))
@@ -28,7 +29,7 @@ export default function Login() {
           <TextField id="password" type="password" onChange={e => setPassword(e.target.value)} />
         </FormGroup>
         <FormGroup>
-          <Button>Login</Button>
+          <Button type="submit" onClick={(e) => loginSubmit(e)}>Login</Button>
         </FormGroup>
         <em>
             <BrowserRouter>

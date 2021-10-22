@@ -17,6 +17,8 @@ const triggerClick = () => {
 
 let checkedState = true;
 
+//All comparisons of words should be done using regex&toLowerCase, but their values as sent should include punctuation
+
 const htmlTest = ['<p class="lan1>', 
 "https://uploads-ssl.webflow.com/581a8b6ad92743753594a969/5bce906d357ce26602b4f616_chicken2-sp.jpg",
 "Está ", "leyendo ", "las ", "noticias ", "Ve ", "un ", "artículo ", "aterrador ", "con ", "un ", "título ", "aterrador ", "Dice ", "EL ", "CIELO ", "SE ", "ESTÁ ", "CAYENDO ",

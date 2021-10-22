@@ -392,5 +392,6 @@ FodyWeavers.xsd
 .env.local
 appsettings.json
 Raton/Raton.csproj
+Raton/Utils/ApiUtils.cs
 
 

@@ -19,56 +19,49 @@ namespace Raton.Repositories
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"SELECT u.*, ut.TypeName 
-                                        FROM [User] u 
-                                        JOIN UserType ut ON u.UserTypeId = ut.Id;";
+                    cmd.CommandText = @"SELECT * 
+                                        FROM Word";
 
                     var reader = cmd.ExecuteReader();
 
-                    var userProfiles = new List<UserProfile>();
+                    var words = new List<Word>();
                     while (reader.Read())
                     {
-                        userProfiles.Add(GetUserProfileFromReader(reader));
+                        words.Add(GetWordFromReader(reader));
                     }
 
                     reader.Close();
 
-                    return userProfiles;
+                    return words;
                 }
             }
         }
-
-        public Word GetById(int id)
+        public List<Word> GetWordsWithTranslations()
         {
             using (var conn = Connection)
             {
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"SELECT u.*, ut.TypeName 
-                                        FROM [User] u 
-                                        JOIN UserType ut ON u.UserTypeId = ut.Id; 
-                                        WHERE Id = @id";
-
-                    DbUtils.AddParameter(cmd, "@Id", id);
+                    cmd.CommandText = @"SELECT * 
+                                        FROM Word";
 
                     var reader = cmd.ExecuteReader();
 
-                    UserProfile userProfile = null;
-
-                    if (reader.Read())
+                    var words = new List<Word>();
+                    while (reader.Read())
                     {
-                        userProfile = GetUserProfileFromReader(reader);
+                        words.Add(GetWordFromReader(reader));
                     }
 
                     reader.Close();
 
-                    return userProfile;
+                    return words;
                 }
             }
         }
 
-        public void Add(Word word)
+        public void Add(Word word, Text text)
         {
             using (var conn = Connection)
             {
@@ -76,12 +69,16 @@ namespace Raton.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                        INSERT INTO UserProfile (Name, Email, ImageUrl, DateCreated)
-                        VALUES (@name, @email, @imageUrl, SYSDATETIME() )";
+                        SELECT * FROM Word
+                        SELECT * FROM TextWord
 
-                    DbUtils.AddParameter(cmd, "@name", userProfile.Username);
-                    DbUtils.AddParameter(cmd, "@email", userProfile.Email);
-                    DbUtils.AddParameter(cmd, "@imageUrl", userProfile.AvatarImg);
+                        INSERT INTO Word (SpanishWord) VALUES (@spanishWord)
+                        OUTPUT INSERTED.ID
+                        dbutils blah
+                        --word.Id = (int)cmd.ExecuteScalar();
+                        INSERT INTO TextWord (WordId, TextId) VALUES (@wordId, @textId)
+                        dbutils "
+
 
                     cmd.ExecuteNonQuery();
                 }
@@ -90,14 +87,21 @@ namespace Raton.Repositories
 
         private Word GetWordFromReader(SqlDataReader reader)
         {
-            return new UserProfile()
+            return new Word()
             {
-                Username = DbUtils.GetString(reader, "Username"),
-                Email = DbUtils.GetString(reader, "Email"),
-                AvatarImg = DbUtils.GetString(reader, "AvatarImg"),
-                Bio = DbUtils.GetString(reader, "Bio"),
-                UserType = new UserType { TypeName = DbUtils.GetString(reader, "TypeName") }
+                Id = DbUtils.GetInt(reader, "Id"),
+                SpanishWord = DbUtils.GetString(reader, "SpanishWord"),
             };
+        }
+
+        private Word GetWordWithTranslation(SqlDataReader reader)
+        {
+            Word word = new Word()
+            {
+                Id = DbUtils.GetInt(reader, "WordId"),
+                SpanishWord = DbUtils.GetString(reader, "SpanishWord"),
+                Translations = new List<string> { DbUtils.GetString(reader, "Translation") }
+            };        
         }
     }
 }

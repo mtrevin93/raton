@@ -9,7 +9,7 @@ namespace Raton.Models
     {
         public int Id { get; set; }
         public string SpanishWord { get; set; }
-        public List<string> Translations { get; set; }
+        public string Translation { get; set; }
         public UserProfile User { get; set; }
         public Text Text { get; set; }
     }

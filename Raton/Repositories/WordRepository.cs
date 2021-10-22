@@ -61,23 +61,23 @@ namespace Raton.Repositories
             }
         }
 
-        public void Add(Word word, Text text)
+        public void AddWithTextWord(string word, int textId)
         {
             using (var conn = Connection)
             {
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"
-                        SELECT * FROM Word
-                        SELECT * FROM TextWord
+                    cmd.CommandText = @"INSERT INTO Word (SpanishWord) VALUES (@spanishWord)
+                                        OUTPUT INSERTED.ID";
 
-                        INSERT INTO Word (SpanishWord) VALUES (@spanishWord)
-                        OUTPUT INSERTED.ID
-                        dbutils blah
-                        --word.Id = (int)cmd.ExecuteScalar();
-                        INSERT INTO TextWord (WordId, TextId) VALUES (@wordId, @textId)
-                        dbutils "
+                    DbUtils.AddParameter(cmd, "@spanishWord", word);
+                    int wordId = (int)cmd.ExecuteScalar();
+
+                    cmd.CommandText = @"INSERT INTO TextWord (WordId, TextId) VALUES (@wordId, @textId)";
+
+                    DbUtils.AddParameter(cmd, "@wordId", wordId);
+                    DbUtils.AddParameter(cmd, "@textId", textId);
 
 
                     cmd.ExecuteNonQuery();
@@ -92,16 +92,6 @@ namespace Raton.Repositories
                 Id = DbUtils.GetInt(reader, "Id"),
                 SpanishWord = DbUtils.GetString(reader, "SpanishWord"),
             };
-        }
-
-        private Word GetWordWithTranslation(SqlDataReader reader)
-        {
-            Word word = new Word()
-            {
-                Id = DbUtils.GetInt(reader, "WordId"),
-                SpanishWord = DbUtils.GetString(reader, "SpanishWord"),
-                Translations = new List<string> { DbUtils.GetString(reader, "Translation") }
-            };        
         }
     }
 }

@@ -14,7 +14,7 @@ namespace Raton.Controllers
     public class TextController : ControllerBase
     {
         private readonly ITextRepository _textRepository;
-        public TextController(ITextRepository textRepository, IWordRepository )
+        public TextController(ITextRepository textRepository)
         {
             _textRepository = textRepository;
         }
@@ -30,7 +30,9 @@ namespace Raton.Controllers
         {
             _textRepository.Add(text);
 
-            _textRepository.AddSpa
+            var htmlString = _textRepository.AddSpanishExperimentWords(text);
+
+            return Ok(text);
         }
     }
 }

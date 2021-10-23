@@ -36,6 +36,8 @@ namespace Raton
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Raton", Version = "v1" });
             });
             services.AddTransient<IUserProfileRepository, UserProfileRepository>();
+            services.AddTransient<ITextRepository, TextRepository>();
+            services.AddTransient<IWordRepository, WordRepository>();
 
             var firebaseProjectId = Configuration.GetValue<string>("FirebaseProjectId");
             var googleTokenUrl = $"https://securetoken.google.com/{firebaseProjectId}";

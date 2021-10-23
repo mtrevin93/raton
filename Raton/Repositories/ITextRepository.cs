@@ -6,5 +6,6 @@ namespace Raton.Repositories
     {
         Text Add(Text text);
         void Add(Word word, Text text);
+        string AddSpanishExperimentWords(Text spanishText);
     }
 }

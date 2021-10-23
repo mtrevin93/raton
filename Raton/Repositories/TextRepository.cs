@@ -17,10 +17,9 @@ namespace Raton.Repositories
     {
         private readonly IWordRepository _wordRepository;
         private readonly ApiUtils _apiUtils;
-        public TextRepository(IConfiguration configuration, IWordRepository wordRepository, ApiUtils apiUtils) : base(configuration)
+        public TextRepository(IConfiguration configuration, IWordRepository wordRepository) : base(configuration)
         {
             _wordRepository = wordRepository;
-            _apiUtils = apiUtils;
         }
 
         public Text Add(Text text)
@@ -62,7 +61,7 @@ namespace Raton.Repositories
                         dbutils blah
                         --word.Id = (int)cmd.ExecuteScalar();
                         INSERT INTO TextWord (WordId, TextId) VALUES (@wordId, @textId)
-                        dbutils "
+                        dbutils ";
 
 
                     cmd.ExecuteNonQuery();
@@ -86,7 +85,7 @@ namespace Raton.Repositories
             List<Word> words = _wordRepository.GetAll();
             string text = "";
             HtmlWeb web = new HtmlWeb();
-            HtmlDocument document = web.Load(spanishText.Address);
+            HtmlDocument document = web.Load(spanishText.Content);
             var result = document.DocumentNode
                    .Descendants()
                    .Where(o => o.Name.StartsWith("div") &&
@@ -106,7 +105,7 @@ namespace Raton.Repositories
                     {
                         if (words.FirstOrDefault(w => w.SpanishWord == word) == null)
                         {
-                            _wordRepository.Add(word, spanishText.Id);
+                            _wordRepository.AddWithTextWord(word, spanishText.Id);
                         }
                     }
 
@@ -150,6 +149,3 @@ namespace Raton.Repositories
 
     }
 
-
-}
-}

@@ -68,7 +68,7 @@ namespace Raton.Repositories
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"INSERT INTO Word (SpanishWord) VALUES ('@spanishWord') OUTPUT INSERTED.Id";
+                    cmd.CommandText = @"INSERT INTO Word (SpanishWord) OUTPUT INSERTED.Id VALUES (@spanishWord) ";
 
                     DbUtils.AddParameter(cmd, "@spanishWord", word);
                     int wordId = (int)cmd.ExecuteScalar();

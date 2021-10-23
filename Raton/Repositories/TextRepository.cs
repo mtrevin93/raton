@@ -86,8 +86,7 @@ namespace Raton.Repositories
             List<Word> words = _wordRepository.GetAll();
             string text = "";
             HtmlWeb web = new HtmlWeb();
-            //HtmlDocument document = new HtmlDocument;
-            //document.OptionDefaultStreamEncoding = Encoding.UTF8
+            //Use UTF8 Charset (same as webpage) to prevent problems with accent marks
             web.OverrideEncoding = Encoding.UTF8;
             HtmlDocument document = web.Load(spanishText.Content);
             document.OptionDefaultStreamEncoding = Encoding.UTF8;
@@ -104,14 +103,19 @@ namespace Raton.Repositories
                     HtmlDocument mainDoc = new HtmlDocument();
                     mainDoc.LoadHtml(pString);
                     string cleanText = mainDoc.DocumentNode.InnerText;
-                    Regex.Replace(cleanText, @"\p{P}", "");
-                    var newWords = cleanText.ToLower().Split(" ");
+                    var regexString = Regex.Replace(cleanText, @"\p{P}", " ");
+                    var newWords = regexString.ToLower().Split(" ");
                     foreach (string word in newWords)
                     { 
-                        Regex.Replace(word, @"\p{P}", "");
                         if (words.FirstOrDefault(w => w.SpanishWord == word) == null)
                         {
-                            _wordRepository.AddWithTextWord(word, spanishText.Id);
+                            var newWord = Regex.Replace(word, @"\s+", "");
+                            if (string.IsNullOrWhiteSpace(word))
+                            {
+                                continue;
+                            }
+                            words.Add(new Word { SpanishWord = newWord });
+                            _wordRepository.AddWithTextWord(newWord, spanishText.Id);                           
                         }
                     }
 

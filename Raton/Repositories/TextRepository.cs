@@ -88,9 +88,9 @@ namespace Raton.Repositories
             HtmlDocument document = web.Load(spanishText.Content);
             var result = document.DocumentNode
                    .Descendants()
-                   .Where(o => o.Name.StartsWith("div") &&
-                          o.GetAttributeValue("class", "") == "lan1-p" ||
-                          o.GetAttributeValue("class", "") == "img-simple");
+                   .Where(o => 
+                          o.GetAttributeValue("p", "") == "lan1-p" ||
+                          o.GetAttributeValue("img", "") == "img-simple");
             foreach (HtmlNode item in result)
             {
                 if (item.ToString().Contains("lan1-p"))

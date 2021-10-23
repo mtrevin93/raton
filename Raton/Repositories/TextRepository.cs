@@ -10,6 +10,7 @@ using System.IO;
 using System.Xml.Serialization;
 using Newtonsoft.Json.Linq;
 using System.Text.RegularExpressions;
+using System.Text;
 
 namespace Raton.Repositories
 {
@@ -85,7 +86,11 @@ namespace Raton.Repositories
             List<Word> words = _wordRepository.GetAll();
             string text = "";
             HtmlWeb web = new HtmlWeb();
+            //HtmlDocument document = new HtmlDocument;
+            //document.OptionDefaultStreamEncoding = Encoding.UTF8
+            web.OverrideEncoding = Encoding.UTF8;
             HtmlDocument document = web.Load(spanishText.Content);
+            document.OptionDefaultStreamEncoding = Encoding.UTF8;
             var result = document.DocumentNode
                    .Descendants()
                    .Where(o => 
@@ -99,10 +104,11 @@ namespace Raton.Repositories
                     HtmlDocument mainDoc = new HtmlDocument();
                     mainDoc.LoadHtml(pString);
                     string cleanText = mainDoc.DocumentNode.InnerText;
-                    Regex.Replace(cleanText, @"[^\w\s]", "");
+                    Regex.Replace(cleanText, @"\p{P}", "");
                     var newWords = cleanText.ToLower().Split(" ");
                     foreach (string word in newWords)
-                    {
+                    { 
+                        Regex.Replace(word, @"\p{P}", "");
                         if (words.FirstOrDefault(w => w.SpanishWord == word) == null)
                         {
                             _wordRepository.AddWithTextWord(word, spanishText.Id);

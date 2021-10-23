@@ -81,10 +81,9 @@ namespace Raton.Repositories
             return null;
         }
 
-        public string AddSpanishExperimentWords(Text spanishText)
+        public void AddSpanishExperimentWords(Text spanishText)
         {
             List<Word> words = _wordRepository.GetAll();
-            string text = "";
             HtmlWeb web = new HtmlWeb();
             //Use UTF8 Charset (same as webpage) to prevent problems with accent marks
             web.OverrideEncoding = Encoding.UTF8;
@@ -120,9 +119,7 @@ namespace Raton.Repositories
                     }
 
                 }
-                text += item;
             }
-            return text;
         }
 
 

@@ -19,8 +19,8 @@ namespace Raton.Controllers
             _textRepository = textRepository;
         }
 
-        [HttpGet]
-        public IActionResult Get()
+        [HttpGet("{id}")]
+        public IActionResult GetById(int id)
         {
             return Ok();
         }

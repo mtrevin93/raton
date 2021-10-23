@@ -89,13 +89,13 @@ namespace Raton.Repositories
             var result = document.DocumentNode
                    .Descendants()
                    .Where(o => 
-                          o.GetAttributeValue("p", "") == "lan1-p" ||
-                          o.GetAttributeValue("img", "") == "img-simple");
+                          o.HasClass("lan1") ||
+                          o.HasClass("img-simple"));
             foreach (HtmlNode item in result)
             {
-                if (item.ToString().Contains("lan1-p"))
+                if (item.Name == "p")
                 {
-                    string pString = item.ToString();
+                    string pString = item.InnerText;
                     HtmlDocument mainDoc = new HtmlDocument();
                     mainDoc.LoadHtml(pString);
                     string cleanText = mainDoc.DocumentNode.InnerText;

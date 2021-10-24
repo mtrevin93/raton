@@ -36,6 +36,19 @@ namespace Raton.Repositories
                 }
             }
         }
+
+        public Text GetTextWords(Text text)
+        {
+            List<Word> textWords = new List<Word>();
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"SELECT "
+                }
+            }
+        }
         public List<Word> GetWordsWithTranslations()
         {
             using (var conn = Connection)

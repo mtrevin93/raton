@@ -83,8 +83,53 @@ namespace Raton.Repositories
             return text;
         }
 
-        public void 
-        public void AddSpanishExperimentWords(Text spanishText)
+        public void GetHTML(Text text)
+        {
+            List<string> htmlString = new List<string>();
+
+            HtmlWeb web = new HtmlWeb();
+            //Use UTF8 Charset (same as webpage) to prevent problems with accent marks
+            web.OverrideEncoding = Encoding.UTF8;
+            HtmlDocument document = web.Load(spanishText.Address);
+            document.OptionDefaultStreamEncoding = Encoding.UTF8;
+            var result = document.DocumentNode
+                   .Descendants()
+                   .Where(o =>
+                          o.HasClass("lan1") ||
+                          o.HasClass("img-simple"));
+
+            List<string> totalWords = new List<string>();
+            foreach (HtmlNode item in result)
+            {
+                if (item.Name == "p")
+                {
+                    htmlString.Add("p-lan1");
+                    //Clean, split, lowercase, and take only distinct items from all words in lan1 p tag
+                    string pString = item.InnerText;
+                    HtmlDocument mainDoc = new HtmlDocument();
+                    mainDoc.LoadHtml(pString);
+                    string cleanText = mainDoc.DocumentNode.InnerText;
+                    var regexString = Regex.Replace(cleanText, @"\p{P}", " ");
+                    var newWords = regexString.ToLower().Split(" ").ToList();
+                    foreach (string word in newWords)
+                    {
+                        //Remove punctuation & throw out whitespace items
+                        var newWord = Regex.Replace(word, @"\s+", "");
+                        if (string.IsNullOrWhiteSpace(newWord))
+                        {
+                            continue;
+                        }
+                        htmlString.Add(newWord);
+                    }
+                }
+                else if (item.Name == "img")
+                {
+                    htmlString.Add(item.InnerText);
+                }
+            }
+            text.htmlString = htmlString;
+        }
+            public void AddSpanishExperimentWords(Text spanishText)
         {
             List<Word> words = _wordRepository.GetAll();
             HtmlWeb web = new HtmlWeb();

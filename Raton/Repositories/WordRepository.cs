@@ -61,8 +61,9 @@ namespace Raton.Repositories
             }
         }
 
-        public void AddWithTextWord(string word, int textId)
+        public Word AddWithTextWord(string word, int textId)
         {
+            Word addedWord = null;
             using (var conn = Connection)
             {
                 conn.Open();
@@ -73,6 +74,8 @@ namespace Raton.Repositories
                     DbUtils.AddParameter(cmd, "@spanishWord", word);
                     int wordId = (int)cmd.ExecuteScalar();
 
+                    addedWord = new Word { SpanishWord = word, Id = wordId };
+
                     cmd.CommandText = @"INSERT INTO TextWord (WordId, TextId) VALUES (@wordId, @textId)";
 
                     DbUtils.AddParameter(cmd, "@wordId", wordId);
@@ -82,6 +85,7 @@ namespace Raton.Repositories
                     cmd.ExecuteNonQuery();
                 }
             }
+            return addedWord;
         }
 
         private Word GetWordFromReader(SqlDataReader reader)

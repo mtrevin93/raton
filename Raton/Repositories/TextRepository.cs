@@ -17,7 +17,6 @@ namespace Raton.Repositories
     public class TextRepository : BaseRepository, ITextRepository
     {
         private readonly IWordRepository _wordRepository;
-        private readonly ApiUtils _apiUtils;
         public TextRepository(IConfiguration configuration, IWordRepository wordRepository) : base(configuration)
         {
             _wordRepository = wordRepository;
@@ -37,16 +36,14 @@ namespace Raton.Repositories
                     DbUtils.AddParameter(cmd, "@title", text.Title);
                     DbUtils.AddParameter(cmd, "@description", text.Description);
                     DbUtils.AddParameter(cmd, "@headerImg", text.HeaderImg);
-                    DbUtils.AddParameter(cmd, "@content", text.Content);
+                    DbUtils.AddParameter(cmd, "@content", text.Address);
 
                     text.Id = (int)cmd.ExecuteScalar();
                 }
             }
             return text;
         }
-
-
-        public void Add(Word word, Text text)
+        public void AddTextWord(Word word, Text text)
         {
             using (var conn = Connection)
             {
@@ -54,16 +51,10 @@ namespace Raton.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                        SELECT * FROM Word
-                        SELECT * FROM TextWord
+                        INSERT INTO TextWord (WordId, TextId) VALUES (@wordId, @textId)";
 
-                        INSERT INTO Word (SpanishWord) VALUES (@spanishWord)
-                        OUTPUT INSERTED.ID
-                        dbutils blah
-                        --word.Id = (int)cmd.ExecuteScalar();
-                        INSERT INTO TextWord (WordId, TextId) VALUES (@wordId, @textId)
-                        dbutils ";
-
+                    DbUtils.AddParameter(cmd, "@wordId", word.Id);
+                    DbUtils.AddParameter(cmd, "@textId", text.Id);
 
                     cmd.ExecuteNonQuery();
                 }
@@ -87,40 +78,59 @@ namespace Raton.Repositories
             HtmlWeb web = new HtmlWeb();
             //Use UTF8 Charset (same as webpage) to prevent problems with accent marks
             web.OverrideEncoding = Encoding.UTF8;
-            HtmlDocument document = web.Load(spanishText.Content);
+            HtmlDocument document = web.Load(spanishText.Address);
             document.OptionDefaultStreamEncoding = Encoding.UTF8;
             var result = document.DocumentNode
                    .Descendants()
                    .Where(o => 
                           o.HasClass("lan1") ||
                           o.HasClass("img-simple"));
+
+            List<string> totalWords = new List<string>();
             foreach (HtmlNode item in result)
             {
                 if (item.Name == "p")
                 {
+                    //Clean, split, lowercase, and take only distinct items from all words in lan1 p tag
                     string pString = item.InnerText;
                     HtmlDocument mainDoc = new HtmlDocument();
                     mainDoc.LoadHtml(pString);
                     string cleanText = mainDoc.DocumentNode.InnerText;
                     var regexString = Regex.Replace(cleanText, @"\p{P}", " ");
-                    var newWords = regexString.ToLower().Split(" ");
+                    var newWords = regexString.ToLower().Split(" ").ToList();
                     foreach (string word in newWords)
-                    { 
-                        if (words.FirstOrDefault(w => w.SpanishWord == word) == null)
+                    {
+                        //Remove punctuation & throw out whitespace items
+                        var newWord = Regex.Replace(word, @"\s+", "");
+                        if (string.IsNullOrWhiteSpace(newWord))
                         {
-                            var newWord = Regex.Replace(word, @"\s+", "");
-                            if (string.IsNullOrWhiteSpace(word))
-                            {
-                                continue;
-                            }
-                            words.Add(new Word { SpanishWord = newWord });
-                            _wordRepository.AddWithTextWord(newWord, spanishText.Id);                           
+                            continue;
+                        }
+                        totalWords.Add(newWord);
+                    }
+                }
+            }
+            var distinctWords = totalWords.Distinct();        
+
+                    foreach (string word in distinctWords)
+                    {
+                        //Check for word entity that already exists in DB
+                        var existingWord = words.FirstOrDefault(w => w.SpanishWord == word);
+
+                        //Create new word entities for word & textWord if it does not exist yet
+                        if (existingWord == null)
+                        {
+                            Word addedWord = _wordRepository.AddWithTextWord(word, spanishText.Id);
+                            words.Add(addedWord);
+                        }
+                        //Add only to TextWord if word already existed
+                        else if (existingWord != null)
+                        {
+                            this.AddTextWord(existingWord, spanishText);
                         }
                     }
 
                 }
-            }
-        }
 
 
             //Translation - maybe do these front-end?

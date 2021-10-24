@@ -11,7 +11,9 @@ namespace Raton.Models
         public string Title { get; set; }
         public string Description { get; set; }
         public string HeaderImg { get; set; }
-        public string Content { get; set; }
+        public string Address { get; set; }
         public DateTime DatePosted { get; set; }
+        public List<string> htmlString { get; set; }
+        public List<Word> TextWords { get; set; }
     }
 }

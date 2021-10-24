@@ -30,7 +30,7 @@ namespace Raton.Controllers
         {
             _textRepository.Add(text);
 
-            var htmlString = _textRepository.AddSpanishExperimentWords(text);
+            _textRepository.AddSpanishExperimentWords(text);
 
             return Ok(text);
         }

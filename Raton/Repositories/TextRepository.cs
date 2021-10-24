@@ -105,13 +105,13 @@ namespace Raton.Repositories
                 {
                     //Add tag to indicate paragraph break
                     htmlString.Add("p-lan1");
-                    //Clean, split, lowercase, and take only distinct items from all words in lan1 p tag
                     string pString = item.InnerText;
                     HtmlDocument mainDoc = new HtmlDocument();
                     mainDoc.LoadHtml(pString);
                     string cleanText = mainDoc.DocumentNode.InnerText;
-                    var regexString = Regex.Replace(cleanText, @"\p{P}", " ");
-                    var newWords = regexString.ToLower().Split(" ").ToList();
+                    var spacedQuotesText = cleanText.Replace("“", " “");
+                    spacedQuotesText = spacedQuotesText.Replace("”", " ”");
+                    var newWords = spacedQuotesText.ToLower().Split(" ").ToList();
                     foreach (string word in newWords)
                     {
                         //Throw out whitespace items. Regex for punctuation to be done on front-end, since punctuation is desired
@@ -126,7 +126,7 @@ namespace Raton.Repositories
                 //Add images in proper order
                 else if (item.Name == "img")
                 {
-                    htmlString.Add(item.InnerText);
+                    htmlString.Add(item.OuterHtml);
                 }
             }
             text.htmlString = htmlString;

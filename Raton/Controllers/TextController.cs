@@ -14,15 +14,20 @@ namespace Raton.Controllers
     public class TextController : ControllerBase
     {
         private readonly ITextRepository _textRepository;
-        public TextController(ITextRepository textRepository)
+        private readonly IWordRepository _wordRepository;
+        public TextController(ITextRepository textRepository, IWordRepository wordRepository)
         {
             _textRepository = textRepository;
+            _wordRepository = wordRepository;
         }
 
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
-            return Ok();
+            Text text = _textRepository.GetById(id);
+            _wordRepository.GetTextWords(text);
+            _textRepository.GetHTML(text);
+            return Ok(text);
         }
 
         [HttpPost]

@@ -8,5 +8,6 @@ namespace Raton.Repositories
         Word AddWithTextWord(string word, int textId);
         List<Word> GetAll();
         List<Word> GetWordsWithTranslations();
+        void GetTextWords(Text text);
     }
 }

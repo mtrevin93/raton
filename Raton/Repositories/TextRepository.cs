@@ -90,7 +90,7 @@ namespace Raton.Repositories
             HtmlWeb web = new HtmlWeb();
             //Use UTF8 Charset (same as webpage) to prevent problems with accent marks
             web.OverrideEncoding = Encoding.UTF8;
-            HtmlDocument document = web.Load(spanishText.Address);
+            HtmlDocument document = web.Load(text.Address);
             document.OptionDefaultStreamEncoding = Encoding.UTF8;
             var result = document.DocumentNode
                    .Descendants()
@@ -103,6 +103,7 @@ namespace Raton.Repositories
             {
                 if (item.Name == "p")
                 {
+                    //Add tag to indicate paragraph break
                     htmlString.Add("p-lan1");
                     //Clean, split, lowercase, and take only distinct items from all words in lan1 p tag
                     string pString = item.InnerText;
@@ -113,15 +114,16 @@ namespace Raton.Repositories
                     var newWords = regexString.ToLower().Split(" ").ToList();
                     foreach (string word in newWords)
                     {
-                        //Remove punctuation & throw out whitespace items
-                        var newWord = Regex.Replace(word, @"\s+", "");
-                        if (string.IsNullOrWhiteSpace(newWord))
+                        //Throw out whitespace items. Regex for punctuation to be done on front-end, since punctuation is desired
+                        if (string.IsNullOrWhiteSpace(word))
                         {
                             continue;
                         }
-                        htmlString.Add(newWord);
+                        //Add all words as individual text
+                        htmlString.Add(word);
                     }
                 }
+                //Add images in proper order
                 else if (item.Name == "img")
                 {
                     htmlString.Add(item.InnerText);

@@ -22,22 +22,22 @@ namespace Raton.Repositories
                     cmd.CommandText = @"SELECT * 
                                         FROM Word";
 
-                    var reader = cmd.ExecuteReader();
+                    using var reader = cmd.ExecuteReader();
+                    { 
 
-                    var words = new List<Word>();
-                    while (reader.Read())
-                    {
-                        words.Add(GetWordFromReader(reader));
+                        var words = new List<Word>();
+                        while (reader.Read())
+                        {
+                            words.Add(GetWordFromReader(reader));
+                        }
+                        return words;
+
                     }
 
-                    reader.Close();
-
-                    return words;
                 }
             }
         }
-
-        public Text GetTextWords(Text text)
+        public void GetTextWords(Text text)
         {
             List<Word> textWords = new List<Word>();
             using (var conn = Connection)
@@ -45,7 +45,20 @@ namespace Raton.Repositories
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"SELECT "
+                    cmd.CommandText = @"SELECT w.Id, w.SpanishWord, tw.TextId From Word w
+                                        RIGHT JOIN TextWord tw
+                                        ON w.Id = tw.WordId
+                                        WHERE tw.TextId = @textId";
+                    DbUtils.AddParameter(cmd, "@textId", text.Id);
+
+                    using var reader = cmd.ExecuteReader();
+                    {
+                        while (reader.Read())
+                        {
+                            textWords.Add(GetWordFromReader(reader));
+                        }
+                    }
+                    text.TextWords = textWords;               
                 }
             }
         }

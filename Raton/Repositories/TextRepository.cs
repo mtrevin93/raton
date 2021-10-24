@@ -83,7 +83,7 @@ namespace Raton.Repositories
             return text;
         }
 
-        public Text 
+        public void 
         public void AddSpanishExperimentWords(Text spanishText)
         {
             List<Word> words = _wordRepository.GetAll();

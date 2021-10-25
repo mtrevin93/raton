@@ -6,9 +6,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Raton.Repositories;
 using Raton.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Raton.Controllers
 {
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class TextController : ControllerBase

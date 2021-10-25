@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom"
 import { Container } from "@mui/material";
 import { getTextById } from "../../modules/textManager";
-import { getUserWords } from "../../modules/wordManager";
+import { getUserWords, addUserWord, deleteUserWord } from "../../modules/wordManager";
 
 export default function Hello() {
 
@@ -21,8 +21,8 @@ export default function Hello() {
     .then(uw => setUserWords(uw))
   },[])
 
-const handleClickUpdateUserWords = () => {
-  if (checkedState === true)
+const handleClickUpdateUserWords = (e) => {
+  if (userWords.find(w => w.id === e.id))
   {
     checkedState = false;
   }
@@ -32,8 +32,6 @@ const handleClickUpdateUserWords = () => {
   }
   console.log("hi")
 }
-
-let checkedState = true;
 
 //All comparisons of words should be done using regex&toLowerCase, but their values as sent should include punctuation
 
@@ -54,7 +52,7 @@ let checkedState = true;
         return(
         <><> </>
 
-        <label id={e.id} htmlFor={e} onClick={() => handleClickUpdateUserWords()} style={ userWords?.find(w => w.id === e.id) ? {color: "green"} : {color: "red"}} style={{ fontSize: 30 }}>
+        <label id={e.id} htmlFor={e} onClick={() => handleClickUpdateUserWords(e)} style={ userWords?.find(w => w.id === e.id) ? {color: "green"} : {color: "red"}} style={{ fontSize: 30 }}>
         {`${e}`}</label>
 
         {/* <input class={`wordCheckbox${e.id}`} style={{display: "none"}} onChange="null" id={e.id} type="checkbox" 

@@ -10,7 +10,7 @@ namespace Raton.Repositories
         List<Word> GetWordsWithTranslations();
         void GetTextWords(Text text);
         List<Word> GetUserWords(UserProfile user);
-        void DeleteUserWord(Word word);
+        void DeleteUserWord(int id);
         void AddUserWord(Word word);
 
     }

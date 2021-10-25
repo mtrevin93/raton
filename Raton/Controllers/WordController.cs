@@ -31,6 +31,20 @@ namespace Raton.Controllers
 
             return Ok(userWords);
         }
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            _wordRepository.DeleteUserWord(id);
+            return NoContent();
+        }
+        [HttpPost]
+        public IActionResult Post(Word word)
+        {
+            word.User = GetCurrentUserProfile();
+            _wordRepository.AddUserWord(word);
+
+            return Ok(word);
+        }
         private UserProfile GetCurrentUserProfile()
         {
             var firebaseUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;

@@ -13,3 +13,26 @@ export const getUserWords = () => {
     }).then (res => res.json())
     );
 };
+
+export const deleteUserWord = (word) => {
+    return getToken().then((token) =>
+    fetch(`${_apiUrl}/${word.id}`, {
+        method: "DELETE",
+        headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+        },
+    }))
+}
+
+export const addUserWord = (word) => {
+    return getToken().then((token) =>
+    fetch(`${_apiUrl}`, {
+        method: "POST",
+        headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(word),
+    }))
+}

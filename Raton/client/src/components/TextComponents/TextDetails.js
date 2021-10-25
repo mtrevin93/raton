@@ -46,20 +46,20 @@ const handleClickUpdateUserWords = (e) => {
 
   <Container maxWidth="lg">
     {text.htmlString?.map((e) => {
-      if (e.startsWith("p-lan1"))
+      if (e.htmlString?.startsWith("p-lan1"))
       {
         return <p class="lan1"></p>
       }
-      else if (e.startsWith("http"))
+      else if (e.htmlString?.startsWith("http"))
       {
-        return <><br/><img src = {e} class="" style={{width: "75%", height:"50%", margin: "auto", display:"block"}} class="center x-illo"/><br/></>
+        return <><br/><img src = {e.htmlString} class="" style={{width: "75%", height:"50%", margin: "auto", display:"block"}} class="center x-illo"/><br/></>
       }
       else 
         return(
         <><> </>
         {/* Regex to match html text of word with punctuation back to stripped word in db */}
-        <label id={e.htmlWord.Id} htmlFor={e} onClick={() => handleClickUpdateUserWords(e)} style={ userWords?.find(w => w.id === text.textWords.find(w => w.spanishWord === e.match(/\w/g).join("")).id) ? {color: "green"} : {color: "red"}} style={{ fontSize: 30 }}>
-        {`${e}`}</label>
+        <label id={e.htmlWord.Id} htmlFor={e} onClick={() => handleClickUpdateUserWords(e)} style={ userWords?.find(w => w.id === e.htmlWord.id) ? {color: "green"} : {color: "red"}} style={{ fontSize: 30 }}>
+        {`${e.htmlWord.spanishWord}`}</label>
 
         {/* <input class={`wordCheckbox${e.id}`} style={{display: "none"}} onChange="null" id={e.id} type="checkbox" 
         defaultChecked={userWords?.find(w => w.id === e.id) ? "checked" : ""} name={e}></input> */}

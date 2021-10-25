@@ -121,9 +121,17 @@ namespace Raton.Repositories
                             continue;
                         }
                         //Add all words as individual text
-                        var newWord = Regex.Replace(word, @"\s+", "");
-                        Word matchedWord = allWords.Find(w => w.SpanishWord == word);
-                        htmlString.Add(new Html { HtmlWord = new Word { Id = matchedWord.Id, SpanishWord = word } });
+                        var regexString = Regex.Replace(word, @"\p{P}", " ");
+                        var newWord = Regex.Replace(regexString, @"\s+", "");
+                        Word matchedWord = allWords.Find(w => w.SpanishWord == newWord);
+                        if (matchedWord != null)
+                        {
+                            htmlString.Add(new Html { HtmlWord = new Word { Id = matchedWord.Id, SpanishWord = word } });
+                        }
+                        else
+                        {
+                            htmlString.Add(new Html { HtmlWord = new Word { Id = 0, SpanishWord = word } });
+                        }
                     }
                 }
                 //Add images in proper order

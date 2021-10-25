@@ -32,14 +32,14 @@ namespace Raton.Controllers
             return Ok(userWords);
         }
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public IActionResult DeleteUserWord(int id)
         {
             Word word = new Word { User = GetCurrentUserProfile(), Id = id };
             _wordRepository.DeleteUserWord(word);
             return NoContent();
         }
         [HttpPost]
-        public IActionResult Post(Word word)
+        public IActionResult PostUserWord(Word word)
         {
             word.User = GetCurrentUserProfile();
             _wordRepository.AddUserWord(word);

@@ -155,6 +155,7 @@ namespace Raton.Repositories
         {
             return new UserProfile()
             {
+                Id = DbUtils.GetInt(reader, "Id"),
                 Username = DbUtils.GetString(reader, "Username"),
                 Email = DbUtils.GetString(reader, "Email"),
                 AvatarImg = DbUtils.GetString(reader, "AvatarImg"),

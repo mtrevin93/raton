@@ -23,7 +23,8 @@ export default function Hello() {
 
 const handleClickUpdateUserWords = (e) => {
   console.log(userWords);
-  if (userWords?.find(w => w.id === e.htmlWord.spanishWord.id))
+  console.log(e.htmlWord.id);
+  if (userWords.find(w => w.id === e.htmlWord.id))
   {
     deleteUserWord(e.htmlWord)
     .then(getUserWords)
@@ -35,7 +36,7 @@ const handleClickUpdateUserWords = (e) => {
     addUserWord(e.htmlWord)
     .then(getUserWords)
     .then(uw => setUserWords(uw))
-    console.log("deleted")
+    console.log("added")
   }
 }
 
@@ -57,8 +58,7 @@ const handleClickUpdateUserWords = (e) => {
       else 
         return(
         <><> </>
-        {/* Regex to match html text of word with punctuation back to stripped word in db */}
-        <label id={e.htmlWord.Id} htmlFor={e} onClick={() => handleClickUpdateUserWords(e)} style={ userWords?.find(w => w.id === e.htmlWord.id) ? {color: "green"} : {color: "red"}} style={{ fontSize: 30 }}>
+        <label id={e.htmlWord.Id} htmlFor={e} onClick={() => handleClickUpdateUserWords(e)} color={ userWords?.find(w => w.id === e.htmlWord.id) ? "green" : "red"} style={userWords?.find(w => w.id === e.htmlWord.id) ? {color: "green", fontSize: 30} : {color: "black", fontSize: 30}}>
         {`${e.htmlWord.spanishWord}`}</label>
 
         {/* <input class={`wordCheckbox${e.id}`} style={{display: "none"}} onChange="null" id={e.id} type="checkbox" 

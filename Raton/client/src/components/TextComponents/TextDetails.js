@@ -23,16 +23,16 @@ export default function Hello() {
 
 const handleClickUpdateUserWords = (e) => {
   console.log(userWords);
-  if (userWords?.find(w => w.id === e.id))
+  if (userWords?.find(w => w.id === e.htmlWord.spanishWord.id))
   {
-    deleteUserWord(e)
+    deleteUserWord(e.htmlWord)
     .then(getUserWords)
     .then(uw => setUserWords(uw));
     console.log("deleted")
   }
   else
   {
-    addUserWord(e)
+    addUserWord(e.htmlWord)
     .then(getUserWords)
     .then(uw => setUserWords(uw))
     console.log("deleted")

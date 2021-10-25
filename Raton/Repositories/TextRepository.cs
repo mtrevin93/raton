@@ -123,7 +123,7 @@ namespace Raton.Repositories
                         //Add all words as individual text
                         var newWord = Regex.Replace(word, @"\s+", "");
                         Word matchedWord = allWords.Find(w => w.SpanishWord == word);
-                        htmlString.Add(new Html { HtmlWord = matchedWord });
+                        htmlString.Add(new Html { HtmlWord = new Word { Id = matchedWord.Id, SpanishWord = word } });
                     }
                 }
                 //Add images in proper order

@@ -58,7 +58,7 @@ const handleClickUpdateUserWords = (e) => {
         return(
         <><> </>
         {/* Regex to match html text of word with punctuation back to stripped word in db */}
-        <label id={text.textWords.find(w => w.spanishWord === e.match(/\w/g).join("")).id} htmlFor={e} onClick={() => handleClickUpdateUserWords(e)} style={ userWords?.find(w => w.id === text.textWords.find(w => w.spanishWord === e.match(/\w/g).join("")).id) ? {color: "green"} : {color: "red"}} style={{ fontSize: 30 }}>
+        <label id={e.htmlWord.Id} htmlFor={e} onClick={() => handleClickUpdateUserWords(e)} style={ userWords?.find(w => w.id === text.textWords.find(w => w.spanishWord === e.match(/\w/g).join("")).id) ? {color: "green"} : {color: "red"}} style={{ fontSize: 30 }}>
         {`${e}`}</label>
 
         {/* <input class={`wordCheckbox${e.id}`} style={{display: "none"}} onChange="null" id={e.id} type="checkbox" 

@@ -38,8 +38,6 @@ const htmlTest = ['<p class="lan1>',
 "Está ", "leyendo ", "las ", "noticias ", "Ve ", "un ", "artículo ", "aterrador ", "con ", "un ", "título ", "aterrador ", "Dice ", "EL ", "CIELO ", "SE ", "ESTÁ ", "CAYENDO ",
 '</p>', '<p class="lan1>', 'esta ', 'blah ', 'blah ']
 
-const words = []
-
   return (
     <>
 
@@ -51,17 +49,11 @@ const words = []
       }
       else if (e.startsWith("http"))
       {
-        return <><img src = {e} class="" style={{width: "50%", height:"50%"}} class="x-illo"/><br/></>
+        return <><br/><img src = {e} class="" style={{width: "50%", height:"50%"}} class="x-illo"/><br/></>
       }
       else 
-      {
-        (words?.push(e))
-      }
-    })}
-      {words.map((w) => {
-        return <><label htmlFor={w} onClick={() => triggerClick()} style={{ fontSize: 30 }}>{w}</label><input style={{display: "none"}} type="checkbox" checked={checkedState ===true? "checked" : false} name={w}></input></>
+        return <><label htmlFor={e} onClick={() => triggerClick()} style={{ fontSize: 30 }}>{` ${e}`}</label><input style={{display: "none"}} type="checkbox" checked={checkedState ===true? "checked" : false} name={e}></input></>
       })}
-  
   </Container>
 </>
   );

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Raton.Repositories;
 using Raton.Models;
+using System.Security.Claims;
 
 namespace Raton.Controllers
 {

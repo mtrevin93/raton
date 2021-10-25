@@ -3,18 +3,22 @@ import { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom"
 import { Container } from "@mui/material";
 import { getTextById } from "../../modules/textManager";
+import { getUserWords } from "../../modules/wordManager";
 
 export default function Hello() {
 
   const history = useHistory();
 
   const [text, setText] = useState({});
+  const [userWords, setUserWords] = useState([]);
 
   const { id } = useParams();
 
   useEffect(() => {
     getTextById(id)
     .then(text => setText(text))
+    .then(getUserWords())
+    .then(uw => setUserWords(uw))
   },[])
 
 const triggerClick = () => {

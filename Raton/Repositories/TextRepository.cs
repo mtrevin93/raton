@@ -96,7 +96,8 @@ namespace Raton.Repositories
                    .Descendants()
                    .Where(o =>
                           o.HasClass("lan1") ||
-                          o.HasClass("img-simple"));
+                          o.HasClass("img-simple") ||
+                          o.HasClass("x-illo"));
 
             List<string> totalWords = new List<string>();
             foreach (HtmlNode item in result)
@@ -126,7 +127,7 @@ namespace Raton.Repositories
                 //Add images in proper order
                 else if (item.Name == "img")
                 {
-                    htmlString.Add(item.OuterHtml);
+                    htmlString.Add(item.Attributes.Where(i => i.Name =="src").FirstOrDefault().Value);
                 }
             }
             text.htmlString = htmlString;

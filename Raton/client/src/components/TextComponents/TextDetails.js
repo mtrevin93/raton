@@ -49,7 +49,7 @@ const words = []
       {
         return <p class="lan1"></p>
       }
-      else if (e.startsWith("<img"))
+      else if (e.startsWith("http"))
       {
         return <><img src = {e} class="" style={{width: "50%", height:"50%"}} class="x-illo"/><br/></>
       }

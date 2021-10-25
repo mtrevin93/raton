@@ -44,9 +44,10 @@ namespace Raton.Repositories
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"SELECT * From Word w
+                    cmd.CommandText = @"SELECT w.Id, w.SpanishWord, uw.WordId
+                                        From Word w
                                         RIGHT JOIN UserWord uw
-                                        ON w.Id = UserWord.WordId";
+                                        ON w.Id = uw.WordId";
                     using var reader = cmd.ExecuteReader();
                     {
                         var words = new List<Word>();

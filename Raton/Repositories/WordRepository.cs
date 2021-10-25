@@ -61,7 +61,37 @@ namespace Raton.Repositories
         }
         public void AddUserWord(Word word)
         {
-            using ()
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"INSERT INTO UserWord
+                                        (UserId, WordId) VALUES (@userId, @wordId)";
+
+                    DbUtils.AddParameter(cmd, "@userId", word.User.Id);
+                    DbUtils.AddParameter(cmd, "@wordId", word.Id);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+        public void DeleteUserWord(Word word)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"DELETE FROM UserWord WHERE UserId = @userId
+                                        AND WordId = @wordId";
+
+                    DbUtils.AddParameter(cmd, "@userId", word.User.Id);
+                    DbUtils.AddParameter(cmd, "@wordId", word.Id);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
         }
         public void GetTextWords(Text text)
         {

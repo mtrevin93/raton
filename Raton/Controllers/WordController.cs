@@ -34,7 +34,8 @@ namespace Raton.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            _wordRepository.DeleteUserWord(id);
+            Word word = new Word { User = GetCurrentUserProfile(), Id = id };
+            _wordRepository.DeleteUserWord(word);
             return NoContent();
         }
         [HttpPost]

@@ -13,7 +13,7 @@ namespace Raton.Models
         public string HeaderImg { get; set; }
         public string Address { get; set; }
         public DateTime DatePosted { get; set; }
-        public List<string> htmlString { get; set; }
+        public List<Html> htmlString { get; set; }
         public List<Word> TextWords { get; set; }
     }
 }

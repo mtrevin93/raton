@@ -17,20 +17,26 @@ export default function Hello() {
   useEffect(() => {
     getTextById(id)
     .then(text => setText(text))
-    .then(getUserWords())
+    .then(getUserWords)
     .then(uw => setUserWords(uw))
   },[])
 
 const handleClickUpdateUserWords = (e) => {
-  if (userWords.find(w => w.id === e.id))
+  console.log(userWords);
+  if (userWords?.find(w => w.id === e.id))
   {
-    checkedState = false;
+    deleteUserWord(e)
+    .then(getUserWords)
+    .then(uw => setUserWords(uw));
+    console.log("deleted")
   }
-  else if (checkedState === false)
+  else
   {
-    checkedState = true;
+    addUserWord(e)
+    .then(getUserWords)
+    .then(uw => setUserWords(uw))
+    console.log("deleted")
   }
-  console.log("hi")
 }
 
 //All comparisons of words should be done using regex&toLowerCase, but their values as sent should include punctuation
@@ -51,8 +57,8 @@ const handleClickUpdateUserWords = (e) => {
       else 
         return(
         <><> </>
-
-        <label id={e.id} htmlFor={e} onClick={() => handleClickUpdateUserWords(e)} style={ userWords?.find(w => w.id === e.id) ? {color: "green"} : {color: "red"}} style={{ fontSize: 30 }}>
+        {/* Regex to match html text of word with punctuation back to stripped word in db */}
+        <label id={text.textWords.find(w => w.spanishWord === e.match(/\w/g).join("")).id} htmlFor={e} onClick={() => handleClickUpdateUserWords(e)} style={ userWords?.find(w => w.id === text.textWords.find(w => w.spanishWord === e.match(/\w/g).join("")).id) ? {color: "green"} : {color: "red"}} style={{ fontSize: 30 }}>
         {`${e}`}</label>
 
         {/* <input class={`wordCheckbox${e.id}`} style={{display: "none"}} onChange="null" id={e.id} type="checkbox" 

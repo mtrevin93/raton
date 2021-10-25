@@ -77,7 +77,7 @@ namespace Raton.Repositories
                 }
             }
         }
-        public void DeleteUserWord(int id)
+        public void DeleteUserWord(Word word)
         {
             using (var conn = Connection)
             {

@@ -85,8 +85,8 @@ namespace Raton.Repositories
 
         public void GetHTML(Text text)
         {
-            List<string> htmlString = new List<string>();
-
+            List<Html> htmlString = new List<Html>();
+            var allWords = _wordRepository.GetAll();
             HtmlWeb web = new HtmlWeb();
             //Use UTF8 Charset (same as webpage) to prevent problems with accent marks
             web.OverrideEncoding = Encoding.UTF8;
@@ -105,7 +105,7 @@ namespace Raton.Repositories
                 if (item.Name == "p")
                 {
                     //Add tag to indicate paragraph break
-                    htmlString.Add("p-lan1");
+                    htmlString.Add(new Html { HtmlString = "p-lan1" });
                     string pString = item.InnerText;
                     HtmlDocument mainDoc = new HtmlDocument();
                     mainDoc.LoadHtml(pString);
@@ -121,13 +121,15 @@ namespace Raton.Repositories
                             continue;
                         }
                         //Add all words as individual text
-                        htmlString.Add(word);
+                        var newWord = Regex.Replace(word, @"\s+", "");
+                        Word matchedWord = allWords.Find(w => w.SpanishWord == word);
+                        htmlString.Add(new Html { HtmlWord = matchedWord });
                     }
                 }
                 //Add images in proper order
                 else if (item.Name == "img")
                 {
-                    htmlString.Add(item.Attributes.Where(i => i.Name =="src").FirstOrDefault().Value);
+                    htmlString.Add(new Html { HtmlString = (item.Attributes.Where(i => i.Name == "src").FirstOrDefault().Value) });
                 }
             }
             text.htmlString = htmlString;

@@ -41,7 +41,7 @@ const htmlTest = ['<p class="lan1>',
   return (
     <>
 
-  <Container maxWidth="xl">
+  <Container maxWidth="lg">
     {text.htmlString?.map((e) => {
       if (e.startsWith("p-lan1"))
       {
@@ -49,10 +49,10 @@ const htmlTest = ['<p class="lan1>',
       }
       else if (e.startsWith("http"))
       {
-        return <><br/><img src = {e} class="" style={{width: "50%", height:"50%"}} class="x-illo"/><br/></>
+        return <><br/><img src = {e} class="" style={{width: "75%", height:"50%", margin: "auto", display:"block"}} class="center x-illo"/><br/></>
       }
       else 
-        return <><label htmlFor={e} onClick={() => triggerClick()} style={{ fontSize: 30 }}>{` ${e}`}</label><input style={{display: "none"}} type="checkbox" checked={checkedState ===true? "checked" : false} name={e}></input></>
+        return <><text> </text><label htmlFor={e} onClick={() => triggerClick()} style={{ fontSize: 30 }}>{`${e}`}</label><input style={{display: "none"}} type="checkbox" checked={checkedState ===true? "checked" : false} name={e}></input></>
       })}
   </Container>
 </>

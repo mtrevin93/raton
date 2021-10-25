@@ -74,6 +74,7 @@ namespace Raton
                     options.AllowAnyHeader();
                 });
             }
+            app.UseAuthentication();
 
             app.UseHttpsRedirection();
 
@@ -87,7 +88,7 @@ namespace Raton
             });
 
             app.UseRouting();
-            app.UseAuthentication();
+
             app.UseAuthorization();
         }
     }

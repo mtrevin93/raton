@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Raton.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class TextController : ControllerBase

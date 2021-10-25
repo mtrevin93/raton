@@ -37,6 +37,32 @@ namespace Raton.Repositories
                 }
             }
         }
+        public List<Word> GetUserWords(UserProfile user)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"SELECT * From Word w
+                                        RIGHT JOIN UserWord uw
+                                        ON w.Id = UserWord.WordId";
+                    using var reader = cmd.ExecuteReader();
+                    {
+                        var words = new List<Word>();
+                        while (reader.Read())
+                        {
+                            words.Add(GetWordFromReader(reader));
+                        }
+                        return words;
+                    }
+                }
+            }
+        }
+        public void AddUserWord(Word word)
+        {
+            using ()
+        }
         public void GetTextWords(Text text)
         {
             List<Word> textWords = new List<Word>();

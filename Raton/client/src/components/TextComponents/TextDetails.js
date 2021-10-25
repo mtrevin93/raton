@@ -21,7 +21,7 @@ export default function Hello() {
     .then(uw => setUserWords(uw))
   },[])
 
-const triggerClick = () => {
+const handleClickUpdateUserWords = () => {
   if (checkedState === true)
   {
     checkedState = false;
@@ -37,11 +37,6 @@ let checkedState = true;
 
 //All comparisons of words should be done using regex&toLowerCase, but their values as sent should include punctuation
 
-const htmlTest = ['<p class="lan1>', 
-"https://uploads-ssl.webflow.com/581a8b6ad92743753594a969/5bce906d357ce26602b4f616_chicken2-sp.jpg",
-"Está ", "leyendo ", "las ", "noticias ", "Ve ", "un ", "artículo ", "aterrador ", "con ", "un ", "título ", "aterrador ", "Dice ", "EL ", "CIELO ", "SE ", "ESTÁ ", "CAYENDO ",
-'</p>', '<p class="lan1>', 'esta ', 'blah ', 'blah ']
-
   return (
     <>
 
@@ -56,9 +51,20 @@ const htmlTest = ['<p class="lan1>',
         return <><br/><img src = {e} class="" style={{width: "75%", height:"50%", margin: "auto", display:"block"}} class="center x-illo"/><br/></>
       }
       else 
-        return <><text> </text><label htmlFor={e} onClick={() => triggerClick()} style={{ fontSize: 30 }}>{`${e}`}</label><input style={{display: "none"}} type="checkbox" checked={checkedState ===true? "checked" : false} name={e}></input></>
-      })}
+        return(
+        <><> </>
+
+        <label id={e.id} htmlFor={e} onClick={() => handleClickUpdateUserWords()} style={ userWords?.find(w => w.id === e.id) ? {color: "green"} : {color: "red"}} style={{ fontSize: 30 }}>
+        {`${e}`}</label>
+
+        {/* <input class={`wordCheckbox${e.id}`} style={{display: "none"}} onChange="null" id={e.id} type="checkbox" 
+        defaultChecked={userWords?.find(w => w.id === e.id) ? "checked" : ""} name={e}></input> */}
+        </>
+
+      )})}
   </Container>
 </>
   );
 }
+
+// `wordCheckbox${e.id}`=== "checked"

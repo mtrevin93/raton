@@ -7,6 +7,14 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { useHistory, useParams } from react-router-dom;
 import { useEffect, useState } from react;
+import { getTranslation } from '../../modules/wordManager';
+
+const [translation, setTranslation] = useState({});
+
+useEffect(() => {
+  getTranslation(word)
+  .then(translation => setTranslation(translation))
+},[])
 
 const bull = (
   <Box
@@ -17,7 +25,7 @@ const bull = (
   </Box>
 );
 
-export default BasicCard = ({word}) => {
+export default Word = ({word}) => {
   return (
     <Card sx={{ minWidth: 275 }}>
       <CardContent>

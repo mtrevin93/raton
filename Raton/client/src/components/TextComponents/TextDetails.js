@@ -4,6 +4,7 @@ import { useHistory, useParams } from "react-router-dom"
 import { Container } from "@mui/material";
 import { getTextById } from "../../modules/textManager";
 import { getUserWords, addUserWord, deleteUserWord } from "../../modules/wordManager";
+import Word from "../WordComponents/Word";
 
 export default function Hello() {
 
@@ -39,6 +40,8 @@ const handleClickUpdateUserWords = (e) => {
     console.log("added")
   }
 }
+
+<Word word = {userWords[1]} key = {userWords[1].id}/>
 
 //All comparisons of words should be done using regex&toLowerCase, but their values as sent should include punctuation
 

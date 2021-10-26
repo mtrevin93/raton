@@ -43,7 +43,7 @@ const handleClickUpdateUserWords = (e) => {
 if (userWords?.length > 0)
 {
   return(
-<Word word = {userWords[1]} key = {userWords[1].id}/>
+<Word word = {userWords[3]} key = {userWords[3].id}/>
   )
 }
 

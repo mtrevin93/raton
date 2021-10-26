@@ -68,7 +68,7 @@ const handleClickUpdateUserWords = (e) => {
       )}  
       else
       {
-        return <text style={{fontsize: 30}}>{`${e.htmlString}`}</text>
+        return <text style={{color: "black", fontSize: 30}}>{`${e.htmlString}`}</text>
       }
     }
   )}

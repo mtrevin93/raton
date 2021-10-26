@@ -12,6 +12,7 @@ export default function Hello() {
 
   const [text, setText] = useState({});
   const [userWords, setUserWords] = useState([]);
+  const [translationWord, setTranslationWord] = useState({});
 
   const { id } = useParams();
 
@@ -40,19 +41,18 @@ const handleClickUpdateUserWords = (e) => {
     console.log("added")
   }
 }
-if (userWords?.length > 0)
-{
-  return(
-<Word word = {userWords[3]} key = {userWords[3].id}/>
-  )
-}
 
-//All comparisons of words should be done using regex&toLowerCase, but their values as sent should include punctuation
+const handleSetWord = (e) => {
+  setTranslationWord(e);
+}
 
   return (
     <>
 
   <Container maxWidth="lg">
+    <aside>
+    {translationWord.spanishWord? <Word word = {translationWord} key = {translationWord.id}/> : null}
+    </aside>
     {text.htmlString?.map((e) => {
       if (e.htmlString?.startsWith("p-lan1"))
       {
@@ -66,7 +66,7 @@ if (userWords?.length > 0)
       {
         return(
         <><> </>
-        <label id={e.htmlWord.Id} htmlFor={e} onClick={() => handleClickUpdateUserWords(e)} color={ userWords?.find(w => w.id === e.htmlWord.id) ? "green" : "red"} style={userWords?.find(w => w.id === e.htmlWord.id) ? {color: "green", fontSize: 30} : {color: "black", fontSize: 30}}>
+        <label id={e.htmlWord.Id} htmlFor={e} onMouseEnter={() => handleSetWord(e)} onClick={() => handleClickUpdateUserWords(e)} color={ userWords?.find(w => w.id === e.htmlWord.id) ? "green" : "red"} style={userWords?.find(w => w.id === e.htmlWord.id) ? {color: "green", fontSize: 30} : {color: "black", fontSize: 30}}>
         {`${e.htmlWord.spanishWord}`}</label>
 
         {/* <input class={`wordCheckbox${e.id}`} style={{display: "none"}} onChange="null" id={e.id} type="checkbox" 

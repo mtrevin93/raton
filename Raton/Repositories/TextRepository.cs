@@ -132,14 +132,13 @@ namespace Raton.Repositories
                             //var stringElements = word.Split(matchedWord.SpanishWord);
                             for(int i = 0; i < 2; i++)
                             {
+                                //Add starting punctuation, then word, then ending punctuation
                                 if (i == 1)
                                 {
                                     htmlString.Add(new Html { HtmlWord = new Word { Id = matchedWord.Id, SpanishWord = matchedWord.SpanishWord } });
                                 }
-                                else
-                                {
                                     htmlString.Add(new Html { HtmlString = tokens[i] });
-                                }
+
                             }
                         }
                     }

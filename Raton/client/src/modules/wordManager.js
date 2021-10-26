@@ -41,9 +41,8 @@ export const addUserWord = (word) => {
 
 export const getTranslation = (word) => {
     return (
-        fetch(`${_dictionaryApiUrl}/${word.SpanishWord}/${_dictionary_Api_Key}`, {
+        fetch(`${_dictionaryApiUrl}/${word}?key=${_dictionary_Api_Key}`, {
             method: "GET",
-            headers: { "Content-Type": "application/json", },
         }).then(res => res.json())
     );
 };

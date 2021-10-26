@@ -5,14 +5,16 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { useHistory, useParams } from react-router-dom;
-import { useEffect, useState } from react;
+import { useHistory, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { getTranslation } from '../../modules/wordManager';
+
+export const Word = ({word}) => {
 
 const [translation, setTranslation] = useState({});
 
 useEffect(() => {
-  getTranslation(word)
+  getTranslation(word.spanishWord)
   .then(translation => setTranslation(translation))
 },[])
 
@@ -25,7 +27,6 @@ const bull = (
   </Box>
 );
 
-export default Word = ({word}) => {
   return (
     <Card sx={{ minWidth: 275 }}>
       <CardContent>

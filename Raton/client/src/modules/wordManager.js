@@ -1,5 +1,7 @@
 import { getToken } from "./authManager";
 
+const _dictionary_Api_Key = process.env.REACT_APP_DICTIONARY_API_KEY
+const _dictionaryApiUrl = "https://www.dictionaryapi.com/api/v3/references/spanish/json"
 const _apiUrl = "/api/word"
 
 export const getUserWords = () => {
@@ -36,3 +38,12 @@ export const addUserWord = (word) => {
         body: JSON.stringify(word),
     }))
 }
+
+export const getTranslation = (word) => {
+    return (
+        fetch(`${_dictionaryApiUrl}/${word.SpanishWord}/${_dictionary_Api_Key}`, {
+            method: "GET",
+            headers: { "Content-Type": "application/json", },
+        }).then(res => res.json())
+    );
+};

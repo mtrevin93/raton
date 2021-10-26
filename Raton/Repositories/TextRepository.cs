@@ -11,6 +11,7 @@ using System.Xml.Serialization;
 using Newtonsoft.Json.Linq;
 using System.Text.RegularExpressions;
 using System.Text;
+using System;
 
 namespace Raton.Repositories
 {
@@ -124,13 +125,22 @@ namespace Raton.Repositories
                         var regexString = Regex.Replace(word, @"\p{P}", " ");
                         var newWord = Regex.Replace(regexString, @"\s+", "");
                         Word matchedWord = allWords.Find(w => w.SpanishWord == newWord);
+                        //Split string containing matched word & possibly punctuation
                         if (matchedWord != null)
                         {
-                            htmlString.Add(new Html { HtmlWord = new Word { Id = matchedWord.Id, SpanishWord = word } });
-                        }
-                        else
-                        {
-                            htmlString.Add(new Html { HtmlWord = new Word { Id = 0, SpanishWord = word } });
+                            string[] tokens = word.Split(new[] { matchedWord.SpanishWord }, StringSplitOptions.None);
+                            //var stringElements = word.Split(matchedWord.SpanishWord);
+                            for(int i = 0; i < 2; i++)
+                            {
+                                if (i == 1)
+                                {
+                                    htmlString.Add(new Html { HtmlWord = new Word { Id = matchedWord.Id, SpanishWord = matchedWord.SpanishWord } });
+                                }
+                                else
+                                {
+                                    htmlString.Add(new Html { HtmlString = tokens[i] });
+                                }
+                            }
                         }
                     }
                 }

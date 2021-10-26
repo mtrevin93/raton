@@ -55,7 +55,8 @@ const handleClickUpdateUserWords = (e) => {
       {
         return <><br/><img src = {e.htmlString} class="" style={{width: "75%", height:"50%", margin: "auto", display:"block"}} class="center x-illo"/><br/></>
       }
-      else 
+      else if (e.htmlWord)
+      {
         return(
         <><> </>
         <label id={e.htmlWord.Id} htmlFor={e} onClick={() => handleClickUpdateUserWords(e)} color={ userWords?.find(w => w.id === e.htmlWord.id) ? "green" : "red"} style={userWords?.find(w => w.id === e.htmlWord.id) ? {color: "green", fontSize: 30} : {color: "black", fontSize: 30}}>
@@ -64,11 +65,13 @@ const handleClickUpdateUserWords = (e) => {
         {/* <input class={`wordCheckbox${e.id}`} style={{display: "none"}} onChange="null" id={e.id} type="checkbox" 
         defaultChecked={userWords?.find(w => w.id === e.id) ? "checked" : ""} name={e}></input> */}
         </>
-
-      )})}
+      )}  
+      else
+      {
+        return <text style={{fontsize: 30}}>{`${e.htmlString}`}</text>
+      }
+    }
+  )}
   </Container>
 </>
-  );
-}
-
-// `wordCheckbox${e.id}`=== "checked"
+);}

@@ -31,7 +31,7 @@ useEffect(() => {
           {translation[0]?.fl}
         </Typography>
         <Typography variant="body2">
-          {translation[0]?.shortdef.toString()}
+          {translation[0]?.shortdef?.toString()}
           <br />
         </Typography>
       </CardContent>

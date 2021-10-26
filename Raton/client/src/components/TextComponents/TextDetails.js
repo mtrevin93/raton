@@ -6,6 +6,8 @@ import { getTextById } from "../../modules/textManager";
 import { getUserWords, addUserWord, deleteUserWord } from "../../modules/wordManager";
 import {Word} from "../WordComponents/Word";
 
+import Grid from '@material-ui/core/Grid'
+
 export default function Hello() {
 
   const history = useHistory();
@@ -43,16 +45,18 @@ const handleClickUpdateUserWords = (e) => {
 }
 
 const handleSetWord = (e) => {
-  setTranslationWord(e);
+  setTranslationWord(e.htmlWord);
 }
 
   return (
     <>
-
-  <Container maxWidth="lg">
-    <aside>
+  <Grid container maxWidth="lg">
+    <Grid item xs={1}/>
+    <Grid item sx= {{m: 6}} xs={2}>
     {translationWord.spanishWord? <Word word = {translationWord} key = {translationWord.id}/> : null}
-    </aside>
+    </Grid>
+    <Grid item xs={1}/>
+    <Grid item xs={6}>
     {text.htmlString?.map((e) => {
       if (e.htmlString?.startsWith("p-lan1"))
       {
@@ -60,7 +64,7 @@ const handleSetWord = (e) => {
       }
       else if (e.htmlString?.startsWith("http"))
       {
-        return <><br/><img src = {e.htmlString} class="" style={{width: "75%", height:"50%", margin: "auto", display:"block"}} class="center x-illo"/><br/></>
+        return <><br/><img src = {e.htmlString} class="" style={{width: "auto", height:"auto", margin: "auto", display:"block"}} class="center x-illo"/><br/></>
       }
       else if (e.htmlWord)
       {
@@ -79,6 +83,7 @@ const handleSetWord = (e) => {
       }
     }
   )}
-  </Container>
+  </Grid>
+  </Grid>
 </>
 );}

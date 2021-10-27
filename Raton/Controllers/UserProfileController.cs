@@ -33,6 +33,13 @@ namespace Raton.Controllers
             return Ok(userProfile);
         }
 
+        [HttpGet("CurrentUser")]
+        public IActionResult GetCurrentUser()
+        {
+            var userProfile = GetCurrentUserProfile();
+            return Ok(userProfile);
+        }
+
         [HttpGet("DoesUserExist/{firebaseUserId}")]
         public IActionResult DoesUserExist(string firebaseUserId)
         {
@@ -68,6 +75,11 @@ namespace Raton.Controllers
         {
             _userProfileRepository.Delete(id);
             return NoContent();
+        }
+        private UserProfile GetCurrentUserProfile()
+        {
+            var firebaseUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            return _userProfileRepository.GetByFirebaseUserId(firebaseUserId);
         }
     }
 }

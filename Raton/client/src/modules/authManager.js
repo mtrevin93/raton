@@ -27,6 +27,15 @@ const _saveUser = (userProfile) => {
 
 export const getToken = () => firebase.auth().currentUser.getIdToken();
 
+export const getCurrentUser = () => {
+  return getToken().then((token) =>
+  fetch(`${_apiUrl}/CurrentUser`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    }
+  }).then(res => res.json()))
+}
 
 export const login = (email, pw) => {
   return firebase.auth().signInWithEmailAndPassword(email, pw)

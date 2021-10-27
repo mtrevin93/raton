@@ -4,6 +4,8 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
+import { logout } from "../modules/authManager";
+import { Button } from "@mui/material";
 
 const useStyles = makeStyles(theme => ({
   menuButton: {
@@ -38,14 +40,17 @@ const Navbar = ({user}) => {
           </Link>
         </Typography>
         {user?.userType?.typeName === "Admin"?
-        <Typography variant="h6" className={classes.title}>
+        <Typography variant="h6" style={{color: "#FFCCBC"}}className={classes.title}>
           Post Text
         </Typography> : null }
-        <Typography variant="h6" className={classes.title}>
+        <Typography variant="h6" style={{color: "#FFCCBC"}}className={classes.title}>
           Title
         </Typography>
-        <Typography variant="h6" className={classes.title}>
+        <Typography variant="h6" style={{color: "#FFCCBC"}}className={classes.title}>
           Title
+        </Typography>
+        <Typography variant="h6" style={{color: "#FFCCBC"}}className={classes.title}>
+        <Button onClick = {logout}>Logout</Button>
         </Typography>
       </Toolbar>
     </AppBar>

@@ -33,10 +33,13 @@ const handleClickLogout = () => {
     <AppBar position="static">
       <Toolbar>
         <Typography style={{color: "#FFCCBC"}}variant="h4" className={classes.title}>
+        <Link style={{color: "#FFCCBC", textDecoration: 'none'}} to="/">
         🐀Ratón
+          </Link>
+
         </Typography>
         <Typography variant="h6" className={classes.title}>
-          <Link style={{color: "#FFCCBC"}} to="/text">
+          <Link style={{color: "#FFCCBC",textDecoration: 'none'}} to="/text">
           Browse
           </Link>
         </Typography>
@@ -51,7 +54,7 @@ const handleClickLogout = () => {
           Title
         </Typography>
         <Typography variant="h6" style={{color: "#FFCCBC"}}className={classes.title}>
-        <Button onClick = {() => handleClickLogout()}>Logout</Button>
+        <Button style={{color: "#FFCCBC"}} onClick = {() => handleClickLogout()}>Logout</Button>
         </Typography>
       </Toolbar>
     </AppBar>

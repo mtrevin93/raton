@@ -41,5 +41,12 @@ namespace Raton.Controllers
 
             return Ok(text);
         }
+        [HttpPut]
+        public IActionResult Update(Text text)
+        {
+            _textRepository.Update(text);
+
+            return Ok(text);
+        }
     }
 }

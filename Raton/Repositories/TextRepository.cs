@@ -44,6 +44,31 @@ namespace Raton.Repositories
             }
             return text;
         }
+        public Text Update(Text text)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"SET Text (Title, Description, HeaderImg)
+                                       OUTPUT Inserted.Id
+                                       VALUES (@title, @description, @headerImg
+                                       WHERE Id = @id";
+
+                    DbUtils.AddParameter(cmd, "@title", text.Title);
+                    DbUtils.AddParameter(cmd, "@description", text.Description);
+                    DbUtils.AddParameter(cmd, "@headerImg", text.HeaderImg);
+                    DbUtils.AddParameter(cmd, "@id", text.Id);
+
+                    using var reader = cmd.ExecuteReader();
+                    {
+                        text = GetTextFromReader(reader);
+                    }
+                }
+            }
+            return text;
+        }
         public void AddTextWord(Word word, Text text)
         {
             using (var conn = Connection)

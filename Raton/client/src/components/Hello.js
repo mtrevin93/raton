@@ -41,8 +41,10 @@ export default function Hello() {
 
 // const words = []
 
-  return (
-    <Button onClick = {logout}>Logout</Button>
+  return(
+    <div>hi</div>
+  );
+
 //     <>
 
 //   <Container maxWidth="xl">
@@ -66,5 +68,5 @@ export default function Hello() {
   
 //   </Container>
 // </>
-  );
+
 }

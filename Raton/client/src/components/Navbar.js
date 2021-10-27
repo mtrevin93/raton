@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
 import { logout } from "../modules/authManager";
 import { Button } from "@mui/material";
+import { useHistory } from "react-router-dom"
 
 const useStyles = makeStyles(theme => ({
   menuButton: {
@@ -17,16 +18,16 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Navbar = ({user}) => {
-  const classes = useStyles();
-  const [open, setOpen] = useState(false);
 
-  const handleOpen = () => {
-    setOpen(true);
-  };
+const history = useHistory();
 
-  const handleClose = () => {
-    setOpen(false);
-  };
+const classes = useStyles();
+const [open, setOpen] = useState(false);
+
+const handleClickLogout = () => {
+  logout();
+  history.push("/");
+}
 
   return (
     <AppBar position="static">
@@ -39,7 +40,7 @@ const Navbar = ({user}) => {
           Browse
           </Link>
         </Typography>
-        {user?.userType?.typeName === "Admin"?
+        {user?.userType?.typeName === "Admin" ?
         <Typography variant="h6" style={{color: "#FFCCBC"}}className={classes.title}>
           Post Text
         </Typography> : null }
@@ -50,7 +51,7 @@ const Navbar = ({user}) => {
           Title
         </Typography>
         <Typography variant="h6" style={{color: "#FFCCBC"}}className={classes.title}>
-        <Button onClick = {logout}>Logout</Button>
+        <Button onClick = {() => handleClickLogout()}>Logout</Button>
         </Typography>
       </Toolbar>
     </AppBar>

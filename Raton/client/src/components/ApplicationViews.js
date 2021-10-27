@@ -14,13 +14,16 @@ export default function ApplicationViews({ isLoggedIn }) {
 const [user, setUser] = useState({});
 
 useEffect(() => {
-  getCurrentUser()
-  .then(user => setUser(user))
-},[])
+  if (isLoggedIn)
+  {
+    getCurrentUser()
+    .then(user => setUser(user))
+  }
+},[isLoggedIn])
 
   return (
     <main>
-      <Navbar user={user} key={user.id}/>
+      {isLoggedIn ? <Navbar user={user} key={user.id}/> : null}
       <Switch>
         <Route path="/" exact>
           {isLoggedIn ? <Hello /> : <Redirect to="/login" />}

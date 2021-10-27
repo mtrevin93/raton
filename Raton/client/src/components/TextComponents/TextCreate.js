@@ -1,94 +1,72 @@
-import React, { useState, useEffect } from "react";
-import { addPost } from "../modules/postManager";
+import React, { useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import {Container, Input} from "reactstrap"
-import { getAllCategories } from "../modules/categoryManager";
-import { getPostById, updatePost } from "../modules/postManager";
+import { addText, updateText, getTextById } from "../modules/textManager";
 
-const PostForm = () => {
+const TextForm = () => {
     
     const history = useHistory();
 
-    const [categories, setCategories] = useState([]);
-
-    const [ post, setPost ] = useState({
+    const [ text, setText ] = useState({
         title : "",
+        description : "",
+        headerImg : "",
         content : "",
-        imageLocation : "",
-        publishDateTime : "",
-        categoryId : "",
     })
 
-    const postId = useParams();
+    const textId = useParams();
 
-    if(postId.id && post.title ==="")
+    if(textId.id && text.title ==="")
     {
-        getPostById(postId.id)
-        .then(post => setPost(post));
+        getTextById(textId.id)
+        .then(text => setText(text));
     }
   
-    const getCategories = () => {
-        getAllCategories().then(categories => setCategories(categories));
-    };
-      
-    useEffect(() => {
-        getCategories();
-    }, []);
-      
-
     const handleInput = (event) => {
-        const newPost = {...post};
-        newPost[event.target.id] = event.target.value;
-        setPost(newPost);
+        const newText = {...text};
+        newText[event.target.id] = event.target.value;
+        setText(newText);
     }
 
-    const handleClickCreatePost = () => {    
-        addPost(post)
-        .then(history.push("/post"))
+    const handleClickAddText = () => {    
+        addText(text)
+        .then(history.push("/text"))
     }
 
-    const handleClickUpdatePost = () => {
-        updatePost(post)
-        .then(history.push("/post"))
+    const handleClickUpdateText = () => {
+        updateText(text)
+        .then(history.push("/text"))
     }
 
 return(
     <Container>
-        <div className="postForm">
-            <h3>Add a Post</h3>
-            <div className="container-5">
-            <div className ="form-group">
+        <div classtitle="TextForm">
+            <h3>Add a New Text</h3>
+            <div classtitle="container-5">
+            <div classtitle ="form-group">
 
-                    <label for="name">Name</label>
-                    <Input type="name" class="form-control" id="title" placeholder ="Title" value={post.title} onChange={handleInput} required/>
+                    <label for="title">Title</label>
+                    <Input type="textarea" class="form-control" id="title" placeholder ="title" value={text.title} onChange={handleInput} required/>
 
-                    <label for="content">Content</label>
-                    <Input type="textarea-lg" class="form-control" id="content" placeholder ="Content" value={post.content} onChange={handleInput} required/>
+                    <label for="description">Description</label>
+                    <Input type="textarea-lg" class="form-control" id="content" placeholder ="Description" value={text.description} onChange={handleInput} required/>
 
-                    <label for="imageLocation">Image URL</label>
-                    <Input type="url" class="form-control" id="imageLocation" placeholder ="Image URL" value={post.imageLocation} onChange={handleInput} required/>
+                    <label for="imageLocation">Header Image</label>
+                    <Input type="textarea" class="form-control" id="imageLocation" placeholder ="URL" value={text.headerImg} onChange={handleInput} required/>
 
-                    <label for="name">Publish Date</label>
-                    <Input type="datetime-local" class="form-control" id="publishDateTime" placeholder ="title" value={post.publishDateTime} onChange={handleInput} required/>
-
-                    <label for="category">Category</label>
-                    <Input type="select" name="select" value={post.categoryId} id="categoryId" onChange={handleInput}>
-                        <option value={null}>Select a Category</option>
-                    {categories.map(c => {
-                        return <option value={c.id}>{c.name}</option>
-                    })}
-                    </Input>
+                    <label for="title">Web Address</label>
+                    <Input type="textarea" class="form-control" id="content" placeholder ="Address" value={text.content} onChange={handleInput} required/>
             </div>
-               {postId.id? 
+               {textId.id? 
                 <div>
                     <button type="submit" class="btn btn-primary mr-3" onClick={event => {
-                        handleClickUpdatePost()
+                        handleClickUpdateText()
                     }}>Update</button>
                 </div>
                 : 
                 <div>
                 <button type="submit" class="btn btn-primary mr-3" onClick={event => {
-                    handleClickCreatePost()
+                    handleClickCreateText()
                 }}>Create</button>
                 </div>
                 }
@@ -97,4 +75,4 @@ return(
     </Container>
 )}
 
-export default PostForm;
+export default TextForm;

@@ -4,10 +4,12 @@ import Login from "./Login";
 import Register from "./Register";
 import Hello from "./Hello";
 import TextDetails from "./TextComponents/TextDetails"
+import Navbar from "./Navbar";
 
 export default function ApplicationViews({ isLoggedIn }) {
   return (
     <main>
+      <Navbar/>
       <Switch>
         <Route path="/" exact>
           {isLoggedIn ? <Hello /> : <Redirect to="/login" />}

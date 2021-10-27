@@ -13,3 +13,15 @@ export const getTextById = (id) => {
         }).then((res) => res.json())
         );
 };
+
+export const addText = (text) => {
+    return getToken().then((token) =>
+    fetch(`${_apiUrl}`, {
+        method: "POST",
+        headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(text),
+    }))
+}

@@ -25,3 +25,15 @@ export const addText = (text) => {
         body: JSON.stringify(text),
     }))
 }
+    export const updateText = (text) => {
+        return getToken().then((token) =>
+        fetch(`${_apiUrl}`, {
+            method: "PUT",
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(text),
+        }))
+    }
+

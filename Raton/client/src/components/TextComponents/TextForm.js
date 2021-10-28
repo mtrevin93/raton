@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import {Container, Input} from "reactstrap"
-import { addText, updateText, getTextById } from "../modules/textManager";
+import { getTextById, updateText, addText } from "../../modules/textManager";
 
-const TextForm = () => {
+export const TextForm = () => {
     
     const history = useHistory();
 
@@ -14,13 +14,16 @@ const TextForm = () => {
         content : "",
     })
 
-    const textId = useParams();
+    const { textId } = useParams();
 
-    if(textId.id && text.title ==="")
-    {
-        getTextById(textId.id)
-        .then(text => setText(text));
-    }
+    useEffect(() => {
+        console.log(textId)
+        if(textId?.id && text.title ==="")
+        {
+            getTextById(textId)
+            .then(text => setText(text));
+        }
+    },[])
   
     const handleInput = (event) => {
         const newText = {...text};
@@ -57,16 +60,16 @@ return(
                     <label for="title">Web Address</label>
                     <Input type="textarea" class="form-control" id="content" placeholder ="Address" value={text.content} onChange={handleInput} required/>
             </div>
-               {textId.id? 
+               {textId?.id? 
                 <div>
-                    <button type="submit" class="btn btn-primary mr-3" onClick={event => {
+                    <button type="submit" class="btn btn-primary mr-3" onClick={() => {
                         handleClickUpdateText()
                     }}>Update</button>
                 </div>
                 : 
                 <div>
-                <button type="submit" class="btn btn-primary mr-3" onClick={event => {
-                    handleClickCreateText()
+                <button type="submit" class="btn btn-primary mr-3" onClick={() => {
+                    handleClickAddText()
                 }}>Create</button>
                 </div>
                 }
@@ -74,5 +77,3 @@ return(
         </div>
     </Container>
 )}
-
-export default TextForm;

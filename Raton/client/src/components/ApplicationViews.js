@@ -7,7 +7,7 @@ import Hello from "./Hello";
 import TextDetails from "./TextComponents/TextDetails"
 import Navbar from "./Navbar";
 import { getCurrentUser } from "../modules/authManager";
-import TextCreate from "./TextComponents/TextCreate"
+import {TextForm} from "./TextComponents/TextForm"
 
 export default function ApplicationViews({ isLoggedIn }) {
 
@@ -29,15 +29,22 @@ useEffect(() => {
           {isLoggedIn ? <Hello /> : <Redirect to="/login" />}
         </Route>
 
-        <Route path="/text/:id" exact>
-          {isLoggedIn ? <TextDetails /> : <Redirect to="/login" />}
-        </Route>
-
         <Route path="/text/create" exact>
           {isLoggedIn ? 
-            user?.userType?.typeName === "Admin" ? <TextCreate user = {user} key = {user.id}/> 
+            user?.userType?.typeName === "Admin" ? <TextForm/> 
             : <Hello />                                                                               
            : <Redirect to="/login" />}
+        </Route>
+
+        <Route path="/text/edit/:id" exact>
+          {isLoggedIn ? 
+            user?.userType?.typeName === "Admin" ? <TextForm/> 
+            : <Hello />                                                                               
+           : <Redirect to="/login" />}
+        </Route>
+
+        <Route path="/text/:id" exact>
+          {isLoggedIn ? <TextDetails /> : <Redirect to="/login" />}
         </Route>
 
         <Route path="/login">

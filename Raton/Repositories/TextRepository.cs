@@ -130,6 +130,22 @@ namespace Raton.Repositories
             return texts;
         }
 
+        public void DeleteText(int textId)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"DELETE FROM Text WHERE Id = @textId";
+
+                    DbUtils.AddParameter(cmd, "@textId", textId);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
         public void GetHTML(Text text)
         {
             List<Html> htmlString = new List<Html>();

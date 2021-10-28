@@ -12,5 +12,6 @@ namespace Raton.Repositories
         void GetHTML(Text text);
         Text Update(Text text);
         List<Text> GetAllTexts();
+        void DeleteText(int textId);
     }
 }

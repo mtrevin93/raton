@@ -49,3 +49,13 @@ export const addText = (text) => {
         );
     };
 
+    export const deleteText = (textId) => {
+        return getToken().then((token) =>
+        fetch(`${_apiUrl}/${textId}`, {
+            method: "DELETE",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            }
+        }))
+    }
+

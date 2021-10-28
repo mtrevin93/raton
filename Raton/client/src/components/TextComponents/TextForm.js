@@ -11,7 +11,7 @@ export const TextForm = () => {
         title : "",
         description : "",
         headerImg : "",
-        content : "",
+        address : "",
     })
 
     const { textId } = useParams();
@@ -43,22 +43,23 @@ export const TextForm = () => {
 
 return(
     <Container>
+        
         <div classtitle="TextForm">
             <h3>Add a New Text</h3>
             <div classtitle="container-5">
             <div classtitle ="form-group">
 
                     <label for="title">Title</label>
-                    <Input type="textarea" class="form-control" id="title" placeholder ="title" value={text.title} onChange={handleInput} required/>
+                    <Input type="text" class="form-control" id="title" placeholder ="Title" value={text.title} onChange={handleInput} required/>
 
                     <label for="description">Description</label>
-                    <Input type="textarea-lg" class="form-control" id="content" placeholder ="Description" value={text.description} onChange={handleInput} required/>
+                    <Input type="textarea" class="form-control" id="description" placeholder ="Description" value={text.description} onChange={handleInput} required/>
 
                     <label for="imageLocation">Header Image</label>
-                    <Input type="textarea" class="form-control" id="imageLocation" placeholder ="URL" value={text.headerImg} onChange={handleInput} required/>
+                    <Input type="text" class="form-control" id="headerImg" placeholder ="URL" value={text.headerImg} onChange={handleInput} required/>
 
                     <label for="title">Web Address</label>
-                    <Input type="textarea" class="form-control" id="content" placeholder ="Address" value={text.content} onChange={handleInput} required/>
+                    <Input type="text" class="form-control" id="address" placeholder ="Address" value={text.address} onChange={handleInput} required/>
             </div>
                {textId?.id? 
                 <div>

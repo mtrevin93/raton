@@ -51,9 +51,10 @@ namespace Raton.Repositories
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"SET Text (Title, Description, HeaderImg)
-                                       OUTPUT Inserted.Id
-                                       VALUES (@title, @description, @headerImg
+                    cmd.CommandText = @"UPDATE Text SET
+                                       Title = @title,
+                                       Description = @description,
+                                       HeaderImg = @headerImg
                                        WHERE Id = @id";
 
                     DbUtils.AddParameter(cmd, "@title", text.Title);
@@ -61,7 +62,8 @@ namespace Raton.Repositories
                     DbUtils.AddParameter(cmd, "@headerImg", text.HeaderImg);
                     DbUtils.AddParameter(cmd, "@id", text.Id);
 
-                    using var reader = cmd.ExecuteReader();
+                    var reader = cmd.ExecuteReader();
+                    if(reader.Read())
                     {
                         text = GetTextFromReader(reader);
                     }

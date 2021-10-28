@@ -48,7 +48,7 @@ const handleClickEdit = () => {
       </CardContent>
       <CardActions>
       <Col xs={2}>
-        <Button className="btn" variant="outline-primary"size="small">Read</Button>
+        <Button className="btn" variant="outline-primary"size="small"onClick={() => handleClickNavigate()}>Read</Button>
       </Col>
       <Col xs={7}/>
       {user?.userType?.typeName === "Admin" ?

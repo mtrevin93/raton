@@ -14,6 +14,18 @@ export const getTextById = (id) => {
         );
 };
 
+export const getTextByIdNoWords = (id) => {
+    return getToken().then((token) => 
+        fetch(`${_apiUrl}/NoWords/${id}`, {
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+            },
+        }).then((res) => res.json())
+        );
+};
+
 export const addText = (text) => {
     return getToken().then((token) =>
     fetch(`${_apiUrl}`, {
@@ -27,7 +39,7 @@ export const addText = (text) => {
 }
     export const updateText = (text) => {
         return getToken().then((token) =>
-        fetch(`${_apiUrl}`, {
+        fetch(`${_apiUrl}/${text.id}`, {
             method: "PUT",
             headers: {
                 Authorization: `Bearer ${token}`,

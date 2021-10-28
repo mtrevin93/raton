@@ -39,6 +39,13 @@ namespace Raton.Controllers
             return Ok(text);
         }
 
+        [HttpGet("NoWords/{id}")]
+        public IActionResult GetByIdNoWords(int id)
+        {
+            Text text = _textRepository.GetById(id);
+            return Ok(text);
+        }
+
         [HttpPost]
         public IActionResult Add(Text text)
         {
@@ -48,7 +55,7 @@ namespace Raton.Controllers
 
             return Ok(text);
         }
-        [HttpPut]
+        [HttpPut("{id}")]
         public IActionResult Update(Text text)
         {
             _textRepository.Update(text);

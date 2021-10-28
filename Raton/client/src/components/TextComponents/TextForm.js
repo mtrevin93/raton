@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import {Container, Input} from "reactstrap"
-import { getTextById, updateText, addText } from "../../modules/textManager";
+import { getTextByIdNoWords, updateText, addText } from "../../modules/textManager";
+import { Row } from "reactstrap";
 
 export const TextForm = () => {
     
@@ -12,15 +13,15 @@ export const TextForm = () => {
         description : "",
         headerImg : "",
         address : "",
+        id : null
     })
 
-    const { textId } = useParams();
+    const { id } = useParams();
 
     useEffect(() => {
-        console.log(textId)
-        if(textId?.id && text.title ==="")
+        if(id && text.title ==="")
         {
-            getTextById(textId)
+            getTextByIdNoWords(id)
             .then(text => setText(text));
         }
     },[])
@@ -41,9 +42,12 @@ export const TextForm = () => {
         .then(history.push("/text"))
     }
 
+    const handleClickNavigate = () => {
+        history.push("/text")
+    }
+
 return(
-    <Container>
-        
+    <Container>  
         <div classtitle="TextForm">
             <h3>Add a New Text</h3>
             <div classtitle="container-5">
@@ -57,23 +61,34 @@ return(
 
                     <label for="imageLocation">Header Image</label>
                     <Input type="text" class="form-control" id="headerImg" placeholder ="URL" value={text.headerImg} onChange={handleInput} required/>
-
+                {id?
+                    <>
+                    <Input type="hidden" class="form-control" id="address" placeholder ="Address" value={text.address} onChange={handleInput} required/>
+                </> 
+                 :
+                <>
                     <label for="title">Web Address</label>
                     <Input type="text" class="form-control" id="address" placeholder ="Address" value={text.address} onChange={handleInput} required/>
+                </> }
             </div>
-               {textId?.id? 
+            <Row>
+               {id? 
                 <div>
-                    <button type="submit" class="btn btn-primary mr-3" onClick={() => {
+                    <button type="submit" class="btn btn-primary ml-3 my-2" onClick={() => {
                         handleClickUpdateText()
                     }}>Update</button>
                 </div>
                 : 
                 <div>
-                <button type="submit" class="btn btn-primary mr-3" onClick={() => {
+                <button type="submit" class="btn btn-primary ml-3 my-2" onClick={() => {
                     handleClickAddText()
                 }}>Create</button>
                 </div>
                 }
+                <button type="submit" class="btn btn-primary ml-3 my-2" onClick={() => {
+                    handleClickNavigate()
+                }}>Cancel</button>
+            </Row>
             </div>
         </div>
     </Container>

@@ -1,42 +1,49 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { useEffect, useState } from "react";
-import { getTranslation } from '../../modules/wordManager';
+import { Media, Col } from 'reactstrap';
+import { useHistory } from 'react-router-dom';
+import Button from 'react-bootstrap/Button';
 
-export const Text = () => {
 
-const [texts, setTexts] = useState({});
+export const Text = ({text, user}) => {
 
-useEffect(() => {
-  getAllTexts()
-  .then(texts => setTexts(texts))
-},[])
+const history = useHistory();
+
+const handleClickNavigate = () => {
+    history.push(`/text/${text.id}`)
+}
 
   return (
+      <Col xs={3}>
     <Card sx={{ minWidth: 275 }}>
-      <CardContent>
-        <Typography variant="h5" component="div">
-          {word.spanishWord}
+      <CardContent >
+        <Typography variant="h4" component="div">
+          {text.title}
         </Typography>
-        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-          {translation[0]?.sls}
-        </Typography>
-        <Typography sx={{ mb: 1.5 }} color="text.secondary">
-          {translation[0]?.fl}
-        </Typography>
-        <Typography variant="body2">
-          {translation[0]?.shortdef?.toString()}
-          <br />
+          <br/>
+        <Media style={{justifyContent: "center"}} onClick={() => handleClickNavigate()}>
+            <img src={text.headerImg} style={{height: "auto", maxWidth: "550px"}}/>
+        </Media>
+        <br/>
+        <Typography sx={{ mb: 1.5 }} color="text.secondary" style={{alignItems: "center"}}>
+          {text.description}
         </Typography>
       </CardContent>
       <CardActions>
-        {/* <Button size="small">Learn More</Button> */}
+      <Col xs={2}>
+        <Button className="btn" variant="outline-primary"size="small">Read</Button>
+      </Col>
+      <Col xs={7}/>
+      {user?.userType?.typeName === "Admin" ?
+      <>
+        <Button size="small" variant="outline-primary">Edit</Button>
+        <Button size="small" variant="outline-danger">Delete</Button>
+      </> : null}
       </CardActions>
     </Card>
+    </Col>
   );
 }

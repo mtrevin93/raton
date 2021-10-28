@@ -8,6 +8,7 @@ import TextDetails from "./TextComponents/TextDetails"
 import Navbar from "./Navbar";
 import { getCurrentUser } from "../modules/authManager";
 import {TextForm} from "./TextComponents/TextForm"
+import { TextList } from "./TextComponents/TextList";
 
 export default function ApplicationViews({ isLoggedIn }) {
 
@@ -27,6 +28,10 @@ useEffect(() => {
       <Switch>
         <Route path="/" exact>
           {isLoggedIn ? <Hello /> : <Redirect to="/login" />}
+        </Route>
+
+        <Route path="/text" exact>
+          {isLoggedIn ? <TextList user={user} key ={user.id}/> : <Redirect to="/login" />}
         </Route>
 
         <Route path="/text/create" exact>

@@ -1,11 +1,9 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom"
-import { Container } from "@mui/material";
 import { getTextById } from "../../modules/textManager";
 import { getUserWords, addUserWord, deleteUserWord } from "../../modules/wordManager";
 import {Word} from "../WordComponents/Word";
-
 import Grid from '@material-ui/core/Grid'
 
 export default function Hello() {

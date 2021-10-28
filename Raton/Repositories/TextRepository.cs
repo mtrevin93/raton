@@ -266,7 +266,8 @@ namespace Raton.Repositories
                 Address = DbUtils.GetString(reader, "Content"),
                 Title = DbUtils.GetString(reader, "Title"),
                 HeaderImg = DbUtils.GetString(reader, "HeaderImg"),
-                DatePosted = DbUtils.GetDateTime(reader, "DatePosted")
+                DatePosted = DbUtils.GetDateTime(reader, "DatePosted"),
+                Description = DbUtils.GetString(reader, "Description")
             };
         }
 

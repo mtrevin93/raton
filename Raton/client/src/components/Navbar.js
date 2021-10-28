@@ -46,7 +46,7 @@ const handleClickLogout = () => {
         {user?.userType?.typeName === "Admin" ?
         <Typography variant="h6" style={{color: "#FFCCBC"}}className={classes.title}>
           <Link style={{color: "#FFCCBC",textDecoration: 'none'}} to="/text/create">
-          Post Text
+          Post
           </Link>
         </Typography> : null }
         <Typography variant="h6" style={{color: "#FFCCBC"}}className={classes.title}>

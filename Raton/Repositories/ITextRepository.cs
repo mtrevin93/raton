@@ -1,4 +1,5 @@
 ﻿using Raton.Models;
+using System.Collections.Generic;
 
 namespace Raton.Repositories
 {
@@ -10,5 +11,6 @@ namespace Raton.Repositories
         Text GetById(int id);
         void GetHTML(Text text);
         Text Update(Text text);
+        List<Text> GetAllTexts();
     }
 }

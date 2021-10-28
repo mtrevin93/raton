@@ -23,6 +23,13 @@ namespace Raton.Controllers
             _wordRepository = wordRepository;
         }
 
+        [HttpGet]
+        public IActionResult Get()
+        {
+            List<Text> texts = _textRepository.GetAllTexts();
+            return Ok(texts);
+        }
+
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {

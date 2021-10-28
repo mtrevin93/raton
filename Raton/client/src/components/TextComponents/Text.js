@@ -6,14 +6,28 @@ import Typography from '@mui/material/Typography';
 import { Media, Col } from 'reactstrap';
 import { useHistory } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
+import { deleteText, updateText, getTexts } from '../../modules/textManager';
 
 
-export const Text = ({text, user}) => {
+export const Text = ({text, user, setTexts}) => {
 
 const history = useHistory();
 
 const handleClickNavigate = () => {
     history.push(`/text/${text.id}`)
+}
+
+const handleClickDelete = () => {
+    const confirm = window.confirm("Are you sure you want to delete this?")
+    if(confirm== true)
+    console.log(text)
+    deleteText(text.id)
+    .then(getTexts)
+    .then(res => setTexts(res))   
+}
+
+const handleClickEdit = () => {
+    history.push(`/text/edit/${text.id}`)
 }
 
   return (
@@ -39,8 +53,8 @@ const handleClickNavigate = () => {
       <Col xs={7}/>
       {user?.userType?.typeName === "Admin" ?
       <>
-        <Button size="small" variant="outline-primary">Edit</Button>
-        <Button size="small" variant="outline-danger">Delete</Button>
+        <Button size="small" variant="outline-primary"onClick={() => handleClickEdit()}>Edit</Button>
+        <Button size="small" variant="outline-danger" onClick={() => handleClickDelete()}>Delete</Button>
       </> : null}
       </CardActions>
     </Card>

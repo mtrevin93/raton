@@ -55,10 +55,10 @@ namespace Raton.Controllers
 
             return Ok(text);
         }
-        [HttpDelete]
-        public IActionResult Delete(int textId)
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
         {
-            _textRepository.DeleteText(textId);
+            _textRepository.DeleteText(id);
             return Ok();
         }
     }

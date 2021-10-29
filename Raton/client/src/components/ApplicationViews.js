@@ -30,7 +30,7 @@ useEffect(() => {
         </Route>
 
         <Route path="/text" exact>
-          {isLoggedIn ? <TextList user={user} key ={user.id}/> : <Redirect to="/login" />}
+          {isLoggedIn ? <TextList forceRefresh={true} user={user} key ={user.id}/> : <Redirect to="/login" />}
         </Route>
 
         <Route path="/text/create" exact>

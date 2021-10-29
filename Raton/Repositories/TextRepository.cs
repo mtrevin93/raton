@@ -60,6 +60,7 @@ namespace Raton.Repositories
                     DbUtils.AddParameter(cmd, "@title", text.Title);
                     DbUtils.AddParameter(cmd, "@headerImg", text.HeaderImg);
                     DbUtils.AddParameter(cmd, "@id", text.Id);
+                    DbUtils.AddParameter(cmd, "@description", text.Description);
 
                     var reader = cmd.ExecuteReader();
                     if(reader.Read())
@@ -132,7 +133,7 @@ namespace Raton.Repositories
             return texts;
         }
 
-        public void GetSharedWordCount(Text text, UserProfile user)
+        public void GetDistinctSharedWordCount(Text text, UserProfile user)
         {
             using (var conn = Connection)
             {
@@ -157,6 +158,37 @@ namespace Raton.Repositories
 
                     var reader = cmd.ExecuteReader();
                     if(reader.Read())
+                    {
+                        text.DistinctUserWords = DbUtils.GetInt(reader, "SharedWordCount");
+                    }
+                }
+            }
+        }
+        public void GetTotalSharedWordCount(Text text, UserProfile user)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"SELECT COUNT ( w.Id ) AS SharedWordCount
+                                        From Word w
+                                        JOIN TextWord tw
+                                        ON tw.WordId = w.Id
+                                        JOIN Text t 
+                                        ON t.Id = tw.TextId
+                                        JOIN UserWord uw
+                                        ON uw.WordId = w.Id
+                                        JOIN [User] u
+                                        ON u.Id = uw.UserId
+                                        WHERE t.Id = @textId
+                                        AND u.Id = @userId";
+
+                    DbUtils.AddParameter(cmd, "@textId", text.Id);
+                    DbUtils.AddParameter(cmd, "@userId", user.Id);
+
+                    var reader = cmd.ExecuteReader();
+                    if (reader.Read())
                     {
                         text.UserWords = DbUtils.GetInt(reader, "SharedWordCount");
                     }

@@ -13,7 +13,6 @@ export const TextForm = () => {
         description : "",
         headerImg : "",
         address : "",
-        id : null
     })
 
     const { id } = useParams();
@@ -38,6 +37,7 @@ export const TextForm = () => {
     }
 
     const handleClickUpdateText = () => {
+        text.id = id;
         updateText(text)
         .then(history.push("/text"))
     }

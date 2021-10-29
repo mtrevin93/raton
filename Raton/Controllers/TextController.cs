@@ -33,7 +33,8 @@ namespace Raton.Controllers
             List<Text> texts = _textRepository.GetAllTexts();
             foreach(var text in texts)
             {
-                _textRepository.GetSharedWordCount(text, user);
+                _textRepository.GetDistinctSharedWordCount(text, user);
+                _textRepository.GetTotalSharedWordCount(text, user);
             }
             return Ok(texts);
         }
@@ -64,8 +65,9 @@ namespace Raton.Controllers
             return Ok(text);
         }
         [HttpPut("{id}")]
-        public IActionResult Update(Text text)
+        public IActionResult Update(int id, Text text)
         {
+            text.Id = id;
             _textRepository.Update(text);
 
             return Ok(text);

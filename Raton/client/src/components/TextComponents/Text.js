@@ -47,12 +47,12 @@ const handleClickEdit = () => {
         </Typography>
       </CardContent>
       <CardActions>
-      <Col xs={2}>
+      <Col xs={1}>
         <Button className="btn" variant="outline-primary"size="small"onClick={() => handleClickNavigate()}>Read</Button>
       </Col>
       <Col xs={1}/>
-      <Typography sx={{ mb: 1.5 }} color="text.secondary" style={{fontStyle: "italic", alignItems: "center"}}>
-          ({text.userWords} words you're learning)
+      <Typography sx={{ mb: 1.5 }} color="text.secondary" style={{fontSize: "14px", fontStyle: "italic", alignItems: "center"}}>
+          ({text.distinctUserWords} words you're learning occur {text.userWords} times)
         </Typography>
       <Col xs={1}/>
       {user?.userType?.typeName === "Admin" ?

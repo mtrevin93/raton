@@ -5,7 +5,7 @@ namespace Raton.Repositories
 {
     public interface IWordRepository
     {
-        Word AddWithTextWord(string word, int textId);
+        Word Add(string word);
         List<Word> GetAll();
         List<Word> GetWordsWithTranslations();
         void GetTextWords(Text text);

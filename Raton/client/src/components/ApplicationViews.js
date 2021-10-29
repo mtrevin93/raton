@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import Login from "./Login";
 import Register from "./Register";
-import Hello from "./Hello";
 import TextDetails from "./TextComponents/TextDetails"
 import Navbar from "./Navbar";
 import { getCurrentUser } from "../modules/authManager";
@@ -27,7 +26,7 @@ useEffect(() => {
       {isLoggedIn ? <Navbar user={user} key={user.id}/> : null}
       <Switch>
         <Route path="/" exact>
-          {isLoggedIn ? <Hello /> : <Redirect to="/login" />}
+          {isLoggedIn ? <TextList user={user} key ={user.id}/> : <Redirect to="/login" />}
         </Route>
 
         <Route path="/text" exact>
@@ -37,14 +36,14 @@ useEffect(() => {
         <Route path="/text/create" exact>
           {isLoggedIn ? 
             user?.userType?.typeName === "Admin" ? <TextForm/> 
-            : <Hello />                                                                               
+            : <TextList user={user} key ={user.id}/>                                                                              
            : <Redirect to="/login" />}
         </Route>
 
         <Route path="/text/edit/:id" exact>
           {isLoggedIn ? 
             user?.userType?.typeName === "Admin" ? <TextForm/> 
-            : <Hello />                                                                               
+            : <TextList user={user} key ={user.id}/>                                                                               
            : <Redirect to="/login" />}
         </Route>
 

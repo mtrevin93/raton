@@ -50,7 +50,11 @@ const handleClickEdit = () => {
       <Col xs={2}>
         <Button className="btn" variant="outline-primary"size="small"onClick={() => handleClickNavigate()}>Read</Button>
       </Col>
-      <Col xs={7}/>
+      <Col xs={1}/>
+      <Typography sx={{ mb: 1.5 }} color="text.secondary" style={{fontStyle: "italic", alignItems: "center"}}>
+          ({text.userWords} words you're learning)
+        </Typography>
+      <Col xs={1}/>
       {user?.userType?.typeName === "Admin" ?
       <>
         <Button size="small" variant="outline-primary"onClick={() => handleClickEdit()}>Edit</Button>

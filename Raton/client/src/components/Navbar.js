@@ -32,31 +32,29 @@ const handleClickLogout = () => {
   return (
     <AppBar position="static">
       <Toolbar>
-        <Typography style={{color: "#FFCCBC"}}variant="h4" className={classes.title}>
-        <Link style={{color: "#FFCCBC", textDecoration: 'none'}} to="/">
-        🐀Ratón
+        <Typography style={{color: "#ef9a9a"}}variant="h4" className={classes.title}>
+        <Link style={{color: "#ef9a9a", textDecoration: 'none'}} to="/">
+        🐀
           </Link>
-
         </Typography>
-        <Typography variant="h6" className={classes.title}>
-          <Link style={{color: "#FFCCBC",textDecoration: 'none'}} to="/text">
+        {/* <Typography variant="h4" className={classes.title}>
+          <Link style={{color: "#ef9a9a",textDecoration: 'none'}} to="/text">
           Browse
           </Link>
-        </Typography>
+        </Typography> */}
         {user?.userType?.typeName === "Admin" ?
-        <Typography variant="h6" style={{color: "#FFCCBC"}}className={classes.title}>
-          <Link style={{color: "#FFCCBC",textDecoration: 'none'}} to="/text/create">
+        <Typography variant="h4" style={{color: "#ef9a9a"}}className={classes.title}>
+          <Link style={{color: "#ef9a9a",textDecoration: 'none'}} to="/text/create">
           Post
           </Link>
         </Typography> : null }
-        <Typography variant="h6" style={{color: "#FFCCBC"}}className={classes.title}>
-          Title
+        <Typography variant="h4" className={classes.title}>
+          <Link style={{color: "#ef9a9a",textDecoration: 'none'}} to="/text">
+          Profile
+          </Link>
         </Typography>
-        <Typography variant="h6" style={{color: "#FFCCBC"}}className={classes.title}>
-          Title
-        </Typography>
-        <Typography variant="h6" style={{color: "#FFCCBC"}}className={classes.title}>
-        <Button style={{color: "#FFCCBC"}} onClick = {() => handleClickLogout()}>Logout</Button>
+        <Typography variant="h6" style={{color: "#ef9a9a"}}className={classes.title}>
+        <Button style={{color: "#ef9a9a"}} onClick = {() => handleClickLogout()}>Logout</Button>
         </Typography>
       </Toolbar>
     </AppBar>

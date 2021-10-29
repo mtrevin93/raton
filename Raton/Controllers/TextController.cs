@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Raton.Repositories;
 using Raton.Models;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace Raton.Controllers
 {
@@ -17,16 +18,23 @@ namespace Raton.Controllers
     {
         private readonly ITextRepository _textRepository;
         private readonly IWordRepository _wordRepository;
-        public TextController(ITextRepository textRepository, IWordRepository wordRepository)
+        private readonly IUserProfileRepository _userProfileRepository;
+        public TextController(ITextRepository textRepository, IWordRepository wordRepository, IUserProfileRepository userProfileRepository)
         {
             _textRepository = textRepository;
             _wordRepository = wordRepository;
+            _userProfileRepository = userProfileRepository;
         }
 
         [HttpGet]
         public IActionResult Get()
         {
+            var user = GetCurrentUserProfile();
             List<Text> texts = _textRepository.GetAllTexts();
+            foreach(var text in texts)
+            {
+                _textRepository.GetSharedWordCount(text, user);
+            }
             return Ok(texts);
         }
 
@@ -67,6 +75,11 @@ namespace Raton.Controllers
         {
             _textRepository.DeleteText(id);
             return Ok();
+        }
+        private UserProfile GetCurrentUserProfile()
+        {
+            var firebaseUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            return _userProfileRepository.GetByFirebaseUserId(firebaseUserId);
         }
     }
 }

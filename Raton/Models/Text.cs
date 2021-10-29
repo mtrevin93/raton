@@ -15,5 +15,6 @@ namespace Raton.Models
         public DateTime DatePosted { get; set; }
         public List<Html> htmlString { get; set; }
         public List<Word> TextWords { get; set; }
+        public int UserWords { get; set; }
     }
 }

@@ -58,7 +58,6 @@ namespace Raton.Repositories
                                        WHERE Id = @id";
 
                     DbUtils.AddParameter(cmd, "@title", text.Title);
-                    DbUtils.AddParameter(cmd, "@description", text.Description);
                     DbUtils.AddParameter(cmd, "@headerImg", text.HeaderImg);
                     DbUtils.AddParameter(cmd, "@id", text.Id);
 
@@ -121,6 +120,7 @@ namespace Raton.Repositories
                 {
                     cmd.CommandText = @"SELECT * FROM Text";
 
+
                     var reader = cmd.ExecuteReader();
 
                     while(reader.Read())
@@ -130,6 +130,38 @@ namespace Raton.Repositories
                 }
             }
             return texts;
+        }
+
+        public void GetSharedWordCount(Text text, UserProfile user)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"SELECT COUNT ( DISTINCT w.Id ) AS SharedWordCount
+                                        From Word w
+                                        JOIN TextWord tw
+                                        ON tw.WordId = w.Id
+                                        JOIN Text t 
+                                        ON t.Id = tw.TextId
+                                        JOIN UserWord uw
+                                        ON uw.WordId = w.Id
+                                        JOIN [User] u
+                                        ON u.Id = uw.UserId
+                                        WHERE t.Id = @textId
+                                        AND u.Id = @userId";
+
+                    DbUtils.AddParameter(cmd, "@textId", text.Id);
+                    DbUtils.AddParameter(cmd, "@userId", user.Id);
+
+                    var reader = cmd.ExecuteReader();
+                    if(reader.Read())
+                    {
+                        text.UserWords = DbUtils.GetInt(reader, "SharedWordCount");
+                    }
+                }
+            }
         }
 
         public void DeleteText(int textId)
@@ -288,38 +320,6 @@ namespace Raton.Repositories
                 Description = DbUtils.GetString(reader, "Description")
             };
         }
-
-
-        //Translation - maybe do these front-end?
-        //foreach (string word in text.Split())
-        //{
-        //    string url = string.Format($"https://www.dictionaryapi.com/api/v3/references/spanish/json/{word}?key={_apiUtils._API_KEY}";
-        //    WebRequest requestObjGet = WebRequest.Create(url);
-        //    requestObjGet.Method = "GET";
-        //    HttpWebResponse responseObjGet = null;
-        //    responseObjGet = (HttpWebResponse)requestObjGet.GetResponse();
-
-        //    string response = null;
-        //    using (Stream stream = responseObjGet.GetResponseStream())
-        //    {
-        //        StreamReader sr = new StreamReader(stream);
-        //        response = sr.ReadToEnd();
-        //        if (!string.IsNullOrWhiteSpace(response))
-        //        {
-
-        //            string translation = JObject.Parse(response)["sense"].SelectToken("$.")
-        //            //Make a new XMLSerializer for the type of object being created
-        //            var ser = new XmlSerializer(typeof(Translation));
-
-        //            //Deserialize and cast to your type of object
-        //            var obj = (Translation.Translations)ser.Deserialize(new StringReader(response));
-
-        //            return obj;
-        //        }
-        //    }
-    }
-
-
-
-    }
+ }
+ }
 

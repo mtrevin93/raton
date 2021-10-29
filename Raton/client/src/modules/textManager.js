@@ -71,3 +71,13 @@ export const addText = (text) => {
         }))
     }
 
+    export const userRead = (textId) => {
+        return getToken().then((token) =>
+        fetch(`${_apiUrl}/Read/${textId}`, {
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            }
+        }))
+    }
+

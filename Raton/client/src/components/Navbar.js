@@ -29,12 +29,19 @@ const handleClickLogout = () => {
   history.push("/");
 }
 
+const handleClickGoBack = () => {
+  history.goBack();
+}
+
   return (
     <AppBar position="static">
       <Toolbar>
+      <Typography style={{color: "#ef9a9a", cursor:"pointer"}}variant="h4" className={classes.title} onClick={() => handleClickGoBack()}>
+        Back
+      </Typography>
         <Typography style={{color: "#ef9a9a"}}variant="h4" className={classes.title}>
         <Link style={{color: "#ef9a9a", textDecoration: 'none'}} to="/">
-        🐀
+        Home
           </Link>
         </Typography>
         {/* <Typography variant="h4" className={classes.title}>

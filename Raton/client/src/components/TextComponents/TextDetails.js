@@ -1,12 +1,12 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom"
-import { getTextById } from "../../modules/textManager";
+import { getTextById, userRead } from "../../modules/textManager";
 import { getUserWords, addUserWord, deleteUserWord } from "../../modules/wordManager";
 import {Word} from "../WordComponents/Word";
 import Grid from '@material-ui/core/Grid'
 
-export default function Hello() {
+export default function TextDetails() {
 
   const history = useHistory();
 
@@ -46,6 +46,11 @@ const handleSetWord = (e) => {
   setTranslationWord(e.htmlWord);
 }
 
+const handleClickRead = () => {
+  userRead()
+  .then(history.push("/text"))
+}
+
   return (
     <>
   <Grid container maxWidth="lg">
@@ -70,9 +75,6 @@ const handleSetWord = (e) => {
         <><> </>
         <label id={e.htmlWord.Id} htmlFor={e} onMouseEnter={() => handleSetWord(e)} onClick={() => handleClickUpdateUserWords(e)} color={ userWords?.find(w => w.id === e.htmlWord.id) ? "green" : "red"} style={userWords?.find(w => w.id === e.htmlWord.id) ? {color: "green", fontSize: 30} : {color: "black", fontSize: 30}}>
         {`${e.htmlWord.spanishWord}`}</label>
-
-        {/* <input class={`wordCheckbox${e.id}`} style={{display: "none"}} onChange="null" id={e.id} type="checkbox" 
-        defaultChecked={userWords?.find(w => w.id === e.id) ? "checked" : ""} name={e}></input> */}
         </>
       )}  
       else
@@ -81,6 +83,9 @@ const handleSetWord = (e) => {
       }
     }
   )}
+  <button style={{float: "right", margin: "1em"}} type="submit" class="btn btn-primary m-6" onClick={() => {
+                    handleClickRead()
+                }}>Done</button>
   </Grid>
   </Grid>
 </>

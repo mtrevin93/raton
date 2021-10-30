@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState, useEffect } from "react";
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -8,7 +9,6 @@ import { getTranslation } from '../../modules/wordManager';
 
 export const VocabWord = ({word}) => {
 
-
 const [translation, setTranslation] = useState({});
 
 useEffect(() => {
@@ -16,10 +16,9 @@ useEffect(() => {
   .then(translation => setTranslation(translation))
 },[])
 
-
 return (
-<Col xs={2}>
-<Card sx={{ minWidth: 100 }}>
+<Col>
+<Card sx={{ maxWidth: 600 }} style={{margin: "0.2em"}}>
   <CardContent >
     <Typography variant="h4" component="div">
       {word.spanishWord}

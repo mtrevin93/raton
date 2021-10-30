@@ -18,7 +18,7 @@ const handleClickNavigate = () => {
 }
 
   return (
-      <Col xs={5}>
+      <Col xs={6}>
     <Card sx={{ minWidth: 275, padding: "1em" }}>
       <CardContent >
         <Typography variant="h4" component="div">

@@ -1,18 +1,21 @@
 import * as React from 'react';
-import { Row, Container } from 'reactstrap';
-import { Bio } from './Bio';
+import { Row, Col, CardColumns } from 'reactstrap';
 import { TextSummaryList } from './TextSummaryList';
+import { VocabList } from './VocabList';
 
 export const UserProfile = ({user}) => {
 
 return(
     <div style={{padding: "2em", pargin: "2em"}}>
     <h1>{user.username}'s Profile</h1>
-        <Row>
-            <Bio user = {user} key = {user.id}/>
-        </Row>
+    <CardColumns style={{display: "flex"}}>
+    <VocabList/>    
+    <Col>
+    </Col>
+    </CardColumns>
         <Row>
             <TextSummaryList user = {user} key = {user.id}/>
         </Row>
+
     </div>
 )}

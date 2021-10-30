@@ -7,8 +7,7 @@ import { Media, Col } from 'reactstrap';
 export const Bio = ({ user }) => {
 
   return (
-      <Col xs={2}>
-    <Card sx={{ minWidth: 275 }}>
+    <Card sx={1}>
       <CardContent >
         <Typography variant="h4" component="div">
           {user.username}
@@ -26,6 +25,5 @@ export const Bio = ({ user }) => {
           {user?.userType?.typeName === "Admin" ? "Admin" : null}
         </Typography>
     </Card>
-    </Col>
   );
 }

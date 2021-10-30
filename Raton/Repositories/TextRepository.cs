@@ -152,6 +152,31 @@ namespace Raton.Repositories
             return texts;
         }
 
+        public List<Text> GetTextsWithUserRead(UserProfile user)
+        {
+            List<Text> texts = new List<Text>();
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"SELECT Text.*, UserText.PagesFinished FROM Text
+                                        JOIN UserText ON UserText.TextId = Text.Id
+                                        WHERE UserText.UserId = @userId";
+
+                    DbUtils.AddParameter(cmd, "@userId", user.Id);
+
+                    var reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        texts.Add(GetTextFromReader(reader));
+                    }
+                }
+            }
+            return texts;
+        }
+
         public void GetDistinctSharedWordCount(Text text, UserProfile user)
         {
             using (var conn = Connection)
@@ -370,7 +395,8 @@ namespace Raton.Repositories
                 Title = DbUtils.GetString(reader, "Title"),
                 HeaderImg = DbUtils.GetString(reader, "HeaderImg"),
                 DatePosted = DbUtils.GetDateTime(reader, "DatePosted"),
-                Description = DbUtils.GetString(reader, "Description")
+                Description = DbUtils.GetString(reader, "Description"),
+                UserPage = DbUtils.GetInt(reader, "PagesFinished")
             };
         }
  }

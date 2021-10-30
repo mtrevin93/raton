@@ -12,6 +12,7 @@ namespace Raton.Repositories
         void GetHTML(Text text);
         Text Update(Text text);
         List<Text> GetAllTexts();
+        List<Text> GetTextsWithUserRead(UserProfile user);
         void DeleteText(int textId);
         void GetTotalSharedWordCount(Text text, UserProfile user);
         void GetDistinctSharedWordCount(Text text, UserProfile user);

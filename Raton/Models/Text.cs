@@ -17,5 +17,6 @@ namespace Raton.Models
         public List<Word> TextWords { get; set; }
         public int DistinctUserWords { get; set; }
         public int UserWords { get; set; }
+        public int UserPage { get; set; }
     }
 }

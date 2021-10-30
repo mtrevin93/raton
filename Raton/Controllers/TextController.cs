@@ -39,6 +39,19 @@ namespace Raton.Controllers
             return Ok(texts);
         }
 
+        [HttpGet("Read")]
+        public IActionResult GetUserReadTexts()
+        {
+            var user = GetCurrentUserProfile();
+            List<Text> texts = _textRepository.GetTextsWithUserRead(user);
+            foreach (var text in texts)
+            {
+                _textRepository.GetDistinctSharedWordCount(text, user);
+                _textRepository.GetTotalSharedWordCount(text, user);
+            }
+            return Ok(texts);
+        }
+
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {

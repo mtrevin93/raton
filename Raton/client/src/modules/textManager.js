@@ -61,6 +61,18 @@ export const addText = (text) => {
         );
     };
 
+    export const getUserReadTexts = () => {
+        return getToken().then((token) => 
+        fetch(`${_apiUrl}/Read`, {
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+            },
+        }).then (res => res.json())
+        );
+    };
+
     export const deleteText = (textId) => {
         return getToken().then((token) =>
         fetch(`${_apiUrl}/${textId}`, {

@@ -170,7 +170,9 @@ namespace Raton.Repositories
 
                     while (reader.Read())
                     {
-                        texts.Add(GetTextFromReader(reader));
+                        Text text = GetTextFromReader(reader);
+                        text.UserPage = DbUtils.GetNullableInt(reader, "PageFinished");
+                        texts.Add(text);
                     }
                 }
             }
@@ -396,7 +398,6 @@ namespace Raton.Repositories
                 HeaderImg = DbUtils.GetString(reader, "HeaderImg"),
                 DatePosted = DbUtils.GetDateTime(reader, "DatePosted"),
                 Description = DbUtils.GetString(reader, "Description"),
-                UserPage = DbUtils.GetInt(reader, "PageFinished")
             };
         }
  }

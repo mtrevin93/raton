@@ -4,15 +4,15 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import { Media, Col } from 'reactstrap';
 
-export const Text = ({ user }) => {
+export const Bio = ({ user }) => {
 
   return (
       <Col xs={3}>
     <Card sx={{ minWidth: 275 }}>
       <CardContent >
-        <Typography variant="h4" component="div">
+        {/* <Typography variant="h4" component="div">
           {user.username}
-        </Typography>
+        </Typography> */}
           <br/>
         <Media style={{justifyContent: "center"}} onClick={() => handleClickNavigate()}>
             <img src={user.avatarImg} style={{height: "auto", maxWidth: "550px"}}/>

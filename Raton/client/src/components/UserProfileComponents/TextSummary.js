@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import { Media, Col } from 'reactstrap';
 import { useHistory } from 'react-router-dom';
 
-export const Text = ({ text, user }) => {
+export const TextSummary = ({ text, user }) => {
 
 const history = useHistory();
 

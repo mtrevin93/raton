@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { useEffect, useState } from "react";
 import { getUserReadTexts } from "../../modules/textManager";
-import { Text } from './Text';
 import { Row, Container } from 'reactstrap';
 import { TextSummary } from './TextSummary';
 
@@ -10,7 +9,7 @@ export const TextSummaryList = ({user}) => {
 const [texts, setTexts] = useState([]);
 
 useEffect(() => {
-  GetUserReadTexts()
+  getUserReadTexts()
   .then(texts => setTexts(texts))
 },[])
 

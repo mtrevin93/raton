@@ -160,7 +160,7 @@ namespace Raton.Repositories
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"SELECT Text.*, UserText.PagesFinished FROM Text
+                    cmd.CommandText = @"SELECT Text.*, UserText.PageFinished FROM Text
                                         JOIN UserText ON UserText.TextId = Text.Id
                                         WHERE UserText.UserId = @userId";
 
@@ -396,7 +396,7 @@ namespace Raton.Repositories
                 HeaderImg = DbUtils.GetString(reader, "HeaderImg"),
                 DatePosted = DbUtils.GetDateTime(reader, "DatePosted"),
                 Description = DbUtils.GetString(reader, "Description"),
-                UserPage = DbUtils.GetInt(reader, "PagesFinished")
+                UserPage = DbUtils.GetInt(reader, "PageFinished")
             };
         }
  }

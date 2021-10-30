@@ -1,7 +1,4 @@
 import * as React from 'react';
-import { useEffect, useState } from "react";
-import { getTexts } from "../../modules/textManager";
-import { Text } from './Text';
 import { Row, Container } from 'reactstrap';
 import { Bio } from './Bio';
 import { TextSummaryList } from './TextSummaryList';

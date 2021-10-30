@@ -7,26 +7,24 @@ import { Media, Col } from 'reactstrap';
 export const Bio = ({ user }) => {
 
   return (
-      <Col xs={3}>
+      <Col xs={2}>
     <Card sx={{ minWidth: 275 }}>
       <CardContent >
-        {/* <Typography variant="h4" component="div">
+        <Typography variant="h4" component="div">
           {user.username}
-        </Typography> */}
+        </Typography>
           <br/>
-        <Media style={{justifyContent: "center"}} onClick={() => handleClickNavigate()}>
-            <img src={user.avatarImg} style={{height: "auto", maxWidth: "550px"}}/>
+        <Media style={{justifyContent: "center"}}>
+            <img src={user.avatarImg} style={{height: "300px", maxWidth: "auto"}}/>
         </Media>
         <br/>
         <Typography sx={{ mb: 1.5 }} color="text.secondary" style={{alignItems: "center"}}>
           {user.bio}
         </Typography>
       </CardContent>
-      <Col xs={1}/>
       <Typography sx={{ mb: 1.5 }} color="text.secondary" style={{fontSize: "14px", fontStyle: "italic", alignItems: "center"}}>
-          {user.userType.typeName === "Admin" ? "Admin" : null}
+          {user?.userType?.typeName === "Admin" ? "Admin" : null}
         </Typography>
-      <Col xs={1}/>
     </Card>
     </Col>
   );

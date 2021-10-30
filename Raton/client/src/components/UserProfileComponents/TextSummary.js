@@ -5,6 +5,7 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import { Media, Col } from 'reactstrap';
 import { useHistory } from 'react-router-dom';
+import Button from 'react-bootstrap/Button';
 
 export const TextSummary = ({ text, user }) => {
 
@@ -15,8 +16,8 @@ const handleClickNavigate = () => {
 }
 
   return (
-      <Col xs={3}>
-    <Card sx={{ minWidth: 275 }}>
+      <Col xs={5}>
+    <Card sx={{ minWidth: 275, padding: "1em" }}>
       <CardContent >
         <Typography variant="h4" component="div">
           {text.title}
@@ -35,6 +36,11 @@ const handleClickNavigate = () => {
           ({text.distinctUserWords} words you're learning occur {text.userWords} times)
         </Typography>
       <Col xs={1}/>
+      <CardActions>
+      <Col xs={1}>
+        <Button className="btn" variant="outline-primary"size="small"onClick={() => handleClickNavigate()}>Read</Button>
+      </Col>
+      </CardActions>
     </Card>
     </Col>
   );

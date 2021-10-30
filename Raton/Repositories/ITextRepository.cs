@@ -15,5 +15,6 @@ namespace Raton.Repositories
         void DeleteText(int textId);
         void GetTotalSharedWordCount(Text text, UserProfile user);
         void GetDistinctSharedWordCount(Text text, UserProfile user);
+        void UserRead(int textId, int userId);
     }
 }

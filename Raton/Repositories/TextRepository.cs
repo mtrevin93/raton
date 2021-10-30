@@ -88,6 +88,25 @@ namespace Raton.Repositories
                 }
             }
         }
+        public void UserRead(int textId, int userId)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"INSERT INTO UserText (UserId, TextId, PageFinished)
+                                        VALUES (@userId, @textId, @pageFinished)";
+
+                    DbUtils.AddParameter(cmd, "@userId", userId);
+                    DbUtils.AddParameter(cmd, "@textId", textId);
+                    DbUtils.AddParameter(cmd, "@pageFinished", 1);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
         public Text GetById(int id)
         {
             Text text = null;

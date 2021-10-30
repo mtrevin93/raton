@@ -47,7 +47,7 @@ const handleSetWord = (e) => {
 }
 
 const handleClickRead = () => {
-  userRead()
+  userRead(id)
   .then(history.push("/text"))
 }
 

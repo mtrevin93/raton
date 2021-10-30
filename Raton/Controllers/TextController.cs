@@ -64,6 +64,14 @@ namespace Raton.Controllers
 
             return Ok(text);
         }
+        [HttpPost("Read/{textId}")]
+        public IActionResult AddUserRead(int textId)
+        {
+            var user = GetCurrentUserProfile();
+            _textRepository.UserRead(textId, user.Id);
+
+            return Ok();
+        }
         [HttpPut("{id}")]
         public IActionResult Update(int id, Text text)
         {

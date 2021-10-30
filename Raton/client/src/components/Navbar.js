@@ -56,7 +56,7 @@ const handleClickGoBack = () => {
           </Link>
         </Typography> : null }
         <Typography variant="h4" className={classes.title}>
-          <Link style={{color: "#ef9a9a",textDecoration: 'none'}} to="/text">
+          <Link style={{color: "#ef9a9a",textDecoration: 'none'}} to="/profile">
           Profile
           </Link>
         </Typography>

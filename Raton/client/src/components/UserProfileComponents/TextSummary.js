@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useEffect, useState } from 'react';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -6,6 +7,7 @@ import Typography from '@mui/material/Typography';
 import { Media, Col } from 'reactstrap';
 import { useHistory } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
+import { getUserWords } from '../../modules/wordManager';
 
 export const TextSummary = ({ text, user }) => {
 

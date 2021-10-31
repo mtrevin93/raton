@@ -6,6 +6,7 @@ import { getUserWords, addUserWord, deleteUserWord } from "../../modules/wordMan
 import {Word} from "../WordComponents/Word";
 import Grid from '@material-ui/core/Grid'
 
+
 export default function TextDetails() {
 
   const history = useHistory();
@@ -31,14 +32,12 @@ const handleClickUpdateUserWords = (e) => {
     deleteUserWord(e.htmlWord)
     .then(getUserWords)
     .then(uw => setUserWords(uw));
-    console.log("deleted")
   }
   else
   {
     addUserWord(e.htmlWord)
     .then(getUserWords)
     .then(uw => setUserWords(uw))
-    console.log("added")
   }
 }
 
@@ -54,6 +53,7 @@ const handleClickRead = () => {
 let nextLetterCapital = true
 
 const setNextLetter = () => {
+
   if(nextLetterCapital === true)
   {
     nextLetterCapital = false
@@ -80,7 +80,7 @@ const capitalizeFirstLetter = (string) => {
     {text.htmlString?.map((e) => {
       if (e.htmlString?.startsWith("p-lan1"))
       {
-        return <p class="lan1"></p>
+        return<p class="lan1"></p>
       }
       else if (e.htmlString?.startsWith("http"))
       {
@@ -90,19 +90,23 @@ const capitalizeFirstLetter = (string) => {
       {
         return(
         <><> </>
-        <label id={e.htmlWord.Id} htmlFor={e} onMouseEnter={() => handleSetWord(e)} onClick={() => handleClickUpdateUserWords(e)} color={ userWords?.find(w => w.id === e.htmlWord.id) ? "green" : "red"} style={userWords?.find(w => w.id === e.htmlWord.id) ? {color: "green", fontSize: 30} : {color: "black", fontSize: 30}}>
+        <label id={e.htmlWord.id} htmlFor={e} onMouseEnter={() => handleSetWord(e)} onClick={() => handleClickUpdateUserWords(e)} color={ userWords?.find(w => w.id === e.htmlWord.id) ? "green" : "red"} style={userWords?.find(w => w.id === e.htmlWord.id) ? {color: "green", fontSize: 30} : {color: "black", fontSize: 30}}>
         {nextLetterCapital === true ? `${capitalizeFirstLetter(e.htmlWord.spanishWord)}` : `${e.htmlWord.spanishWord}`}</label>
-        {nextLetterCapital === true? setNextLetter() : null}
+        {nextLetterCapital === true ? setNextLetter() : null}
         </>
       )}  
       else
       {
-        const punctuationTest = e.htmlString.replaceAll(/[!"#$%&().;<=>?@[\]^_`{|}~]/g,"");
+        if (nextLetterCapital === true)
+        {
+          return
+        }
+        const punctuationTest = e.htmlString.replaceAll(/[!".¡?]/g,"");
         if(punctuationTest.length < e.htmlString.length)
         {
           setNextLetter();
         }
-        return <text style={{color: "black", fontSize: 30}}>{`${e.htmlString}`}</text>
+          return <text style={{color: "black", fontSize: 30}}>{`${e.htmlString}`}</text>
       }
     }
   )}

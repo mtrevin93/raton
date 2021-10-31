@@ -77,6 +77,10 @@ const capitalizeFirstLetter = (string) => {
     </Grid>
     <Grid item xs={1}/>
     <Grid item xs={6}>
+      <br/>
+      <h1 className = "text">{text.title}</h1>
+      <h5 className = "text">From "The Spanish Experiment"</h5>
+      <br/>
     {text.htmlString?.map((e) => {
       if (e.htmlString?.startsWith("p-lan1"))
       {

@@ -21,7 +21,6 @@ const handleClickNavigate = () => {
 const handleClickDelete = () => {
     const confirm = window.confirm("Are you sure you want to delete this?")
     if(confirm== true)
-    console.log(text)
     deleteText(text.id)
     .then(getTexts)
     .then(res => setTexts(res))   
@@ -32,6 +31,7 @@ const handleClickEdit = () => {
 }
 
   return (
+    <>
       <Col xs={3}>
     <Card sx={{ minWidth: 275 }}>
       <CardContent >
@@ -64,5 +64,6 @@ const handleClickEdit = () => {
       </CardActions>
     </Card>
     </Col>
+      </>
   );
 }

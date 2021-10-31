@@ -7,7 +7,7 @@ export const UserProfile = ({user}) => {
 
 return(
     <div style={{padding: "2em", pargin: "2em"}}>
-    <h1>{user.username}'s Profile</h1>
+    <h1>{user.username}'s Vocab</h1>
     <CardColumns style={{display: "flex"}}>
     <VocabList/>    
     <Col>

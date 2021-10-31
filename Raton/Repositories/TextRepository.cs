@@ -359,32 +359,45 @@ namespace Raton.Repositories
                         {
                             continue;
                         }
+                        if (newWord != null)
+                        {
                         totalWords.Add(newWord);
+                        }
                     }
                 }
             }
             //Distinct Words for word entities
             var distinctWords = totalWords.Distinct();        
+            var filteredWords = words.Where(w => w != null).ToList();
 
                     foreach (string word in distinctWords)
                     {
+                    try
+                    {
                         //Check for word entity that already exists in DB
-                        var existingWord = words.FirstOrDefault(w => w.SpanishWord == word);
+                        var existingWord = filteredWords.FirstOrDefault(w => w.SpanishWord == word);
 
                         //Create new word entity if it does not exist yet
                         if (existingWord == null)
                         {
                             Word addedWord = _wordRepository.Add(word);
-                            words.Add(addedWord);
+                            filteredWords.Add(addedWord);
                         }
+                    }
+                    catch(Exception ex)
+                    {
+                    continue;
+                    }
                     }
 
             //Once word entities have been created, ALL words added into text words (allow multiple copies)
             foreach(string word in totalWords)
             {
                 var existingWord = words.FirstOrDefault(w => w.SpanishWord == word);
-
+                if(existingWord != null)
+                {
                 this.AddTextWord(existingWord, spanishText);
+                }
             }
         }
 

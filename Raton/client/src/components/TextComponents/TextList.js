@@ -10,6 +10,7 @@ const [texts, setTexts] = useState([]);
 
 useEffect(() => {
   getTexts()
+  .then(getTexts)
   .then(texts => setTexts(texts))
 },[])
 

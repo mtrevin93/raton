@@ -19,7 +19,7 @@ useEffect(() => {
 },[])
 
   return (
-    <Card sx={{ minWidth: 275 }}>
+    <Card sx={{ minWidth: 275, position: "fixed", top: "10%"}}>
       <CardContent>
         <Typography variant="h5" component="div">
           {word.spanishWord}

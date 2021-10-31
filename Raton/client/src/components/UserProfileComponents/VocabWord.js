@@ -18,7 +18,7 @@ useEffect(() => {
 
 return (
 <Col>
-<Card sx={{ maxWidth: 600 }} style={{margin: "0.2em"}}>
+<Card sx={{ minWidth: 600 }} style={{margin: "0.2em"}}>
   <CardContent >
     <Typography variant="h4" component="div">
       {word.spanishWord}

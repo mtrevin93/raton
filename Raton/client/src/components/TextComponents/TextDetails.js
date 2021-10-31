@@ -51,6 +51,23 @@ const handleClickRead = () => {
   .then(history.push("/text"))
 }
 
+let nextLetterCapital = true
+
+const setNextLetter = () => {
+  if(nextLetterCapital === true)
+  {
+    nextLetterCapital = false
+  }
+  else if (nextLetterCapital === false)
+  {
+    nextLetterCapital = true;
+  }
+}
+
+const capitalizeFirstLetter = (string) => {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
   return (
     <>
   <Grid container maxWidth="lg">
@@ -74,11 +91,17 @@ const handleClickRead = () => {
         return(
         <><> </>
         <label id={e.htmlWord.Id} htmlFor={e} onMouseEnter={() => handleSetWord(e)} onClick={() => handleClickUpdateUserWords(e)} color={ userWords?.find(w => w.id === e.htmlWord.id) ? "green" : "red"} style={userWords?.find(w => w.id === e.htmlWord.id) ? {color: "green", fontSize: 30} : {color: "black", fontSize: 30}}>
-        {`${e.htmlWord.spanishWord}`}</label>
+        {nextLetterCapital === true ? `${capitalizeFirstLetter(e.htmlWord.spanishWord)}` : `${e.htmlWord.spanishWord}`}</label>
+        {nextLetterCapital === true? setNextLetter() : null}
         </>
       )}  
       else
       {
+        const punctuationTest = e.htmlString.replaceAll(/[!"#$%&().;<=>?@[\]^_`{|}~]/g,"");
+        if(punctuationTest.length < e.htmlString.length)
+        {
+          setNextLetter();
+        }
         return <text style={{color: "black", fontSize: 30}}>{`${e.htmlString}`}</text>
       }
     }

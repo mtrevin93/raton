@@ -29,7 +29,7 @@ useEffect(() => {
         <div className="columns">
           { wordsChunk.map( uw => (
               <div className="column">
-                <VocabWord key={uw.id} word={uw} />
+                <VocabWord setUserWords = {setUserWords} key={uw.id} word={uw} />
               </div>
             ))
           }

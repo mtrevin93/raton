@@ -12,7 +12,7 @@ useEffect(() => {
   getTexts()
   .then(getTexts)
   .then(texts => setTexts(texts))
-},[])
+},[texts.length])
 
 return(
     <div style={{padding: "2em", pargin: "2em"}}>

@@ -5,7 +5,7 @@ import { getTextById, userRead } from "../../modules/textManager";
 import { getUserWords, addUserWord, deleteUserWord } from "../../modules/wordManager";
 import {Word} from "../WordComponents/Word";
 import Grid from '@material-ui/core/Grid'
-
+import './TextDetails.css';
 
 export default function TextDetails() {
 
@@ -90,7 +90,7 @@ const capitalizeFirstLetter = (string) => {
       {
         return(
         <><> </>
-        <label id={e.htmlWord.id} htmlFor={e} onMouseEnter={() => handleSetWord(e)} onClick={() => handleClickUpdateUserWords(e)} color={ userWords?.find(w => w.id === e.htmlWord.id) ? "green" : "red"} style={userWords?.find(w => w.id === e.htmlWord.id) ? {color: "green", fontSize: 30} : {color: "black", fontSize: 30}}>
+        <label id={e.htmlWord.id} className = "text" htmlFor={e} onMouseEnter={() => handleSetWord(e)} onClick={() => handleClickUpdateUserWords(e)} color={ userWords?.find(w => w.id === e.htmlWord.id) ? "green" : "red"} style={userWords?.find(w => w.id === e.htmlWord.id) ? {color: "green", fontSize: 30} : {color: "black", fontSize: 30}}>
         {nextLetterCapital === true ? `${capitalizeFirstLetter(e.htmlWord.spanishWord)}` : `${e.htmlWord.spanishWord}`}</label>
         {nextLetterCapital === true ? setNextLetter() : null}
         </>

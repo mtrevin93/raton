@@ -4,7 +4,7 @@ Ratón is a spanish-language learning app for beginners. On Ratón, users can re
 # Profile
 On a user's profile, a list of Spanish vocab & definitions that have been added to a user's vocabularly learning list can be viewed. Users can also review any stories that they have finished reading.
 
-![Profile](/Raton/client/public/ProfileViewRaton.mov)
+https://gyazo.com/1301725b92d90c25ac922d05e3c0af13
 
 # Stories
 Users can view all stories that are available to read, which include the number of distinct and total vocabulary from that user's learning vocabulary list that occur in that story. Admins can also edit, delete, or post new stories (which involves simply pasting a URL from a story from "The Spanish Experiment.")
@@ -14,7 +14,7 @@ Users can view all stories that are available to read, which include the number 
 # Reader
 Here, users can read and interact with stories. The stories have been rebuilt in a way that lets users hover over words to view their English language translation. Users can click a word to add it to their vocabulary list (words on their list appear green), or click on a word that is already on their list to indicate that they are no longer studying it and that it should be removed from their reading list.
 
-![Build Mode](/Raton/client/public/ReaderGif.mov)
+https://gyazo.com/c0b124a0b447536b7cbdc9d7b13a61a9
 
 # ERD
 

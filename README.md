@@ -4,32 +4,32 @@ Ratón is a spanish-language learning app for beginners. On Ratón, users can re
 # Profile
 On a user's profile, a list of Spanish vocab & definitions that have been added to a user's vocabularly learning list can be viewed. Users can also review any stories that they have finished reading.
 
-![Profile](/Raton/client/public/images/ProfileViewRaton.mp4)
+![Profile](/Raton/client/public/ProfileViewRaton.mp4)
 
 # Stories
 Users can view all stories that are available to read, which include the number of distinct and total vocabulary from that user's learning vocabulary list that occur in that story. Admins can also edit, delete, or post new stories (which involves simply pasting a URL from a story from "The Spanish Experiment.")
 
-![Search Mode](/Raton/client/public/images/HomepageRaton.PNG)
+![Search Mode](/Raton/client/public/HomepageRaton.PNG)
 
 # Reader
 Here, users can read and interact with stories. The stories have been rebuilt in a way that lets users hover over words to view their English language translation. Users can click a word to add it to their vocabulary list (words on their list appear green), or click on a word that is already on their list to indicate that they are no longer studying it and that it should be removed from their reading list.
 
-![Build Mode](/Raton/client/public/images/ReaderGif.mp4)
+![Build Mode](/Raton/client/public/ReaderGif.mp4)
 
 # Technologies Used
 
-![ERD](/Raton/client/public/images/RatonERD.PNG)
+![ERD](/Raton/client/public/RatonERD.PNG)
 
 # Setting Up This Project:
 
 ## Starting Off
-/*:
+/*
 - Clone Repo
 - Create .gitignore
 - Setup SQL Server
 */
 ## Set Up Firebase
-/*:
+/*
 - Go to Firebase console and create a new project
 - Enable a "Sign-in method"
 - NOTE: In the course we used the Email/Password sign-in method.
@@ -38,7 +38,7 @@ Here, users can read and interact with stories. The stories have been rebuilt in
 */
 
 ## Server Side
-/*:
+/*
 - Install Nuget Packages (including firebase, react-router-dom, bootstrap, materialUI)
 - Add connection string to appsettings.json
 - Update appsettings.json to include your FirebaseProjectId
@@ -46,10 +46,10 @@ Here, users can read and interact with stories. The stories have been rebuilt in
 - Update Startup.cs to call UseAuthentication before UseAuthorization
 - Copy in the UserProfileRepository, IUserProfileRepository and UserProfileController from Tabloid/Gifter and modify as needed
 - Register the UserProfileRepository with ASP.NET by calling services.AddTransient inside Startup.cs
-/*:
+/*
 
 ## Client Side
-/*:
+/*
 - Create client directory and run npx create-react-app 
 - Setup proxy in package.json
 - Install firebase and react router using npm install react-router-dom firebase

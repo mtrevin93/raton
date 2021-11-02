@@ -1,70 +1,64 @@
-# Getting Started with Create React App
+# Ratón
+Ratón is a spanish-language learning app for beginners. On Ratón, users can read and interact with the vocab of spanish children's stories. All stories included are used with permission, courtesy of "The Spanish Experiment."
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Profile
+On a user's profile, a list of Spanish vocab & definitions that have been added to a user's vocabularly learning list can be viewed. Users can also review any stories that they have finished reading.
 
-## Available Scripts
+![Profile](/public/images/ProfileViewRaton.mp4)
 
-In the project directory, you can run:
+# Stories
+Users can view all stories that are available to read, which include the number of distinct and total vocabulary from that user's learning vocabulary list that occur in that story. Admins can also edit, delete, or post new stories (which involves simply pasting a URL from a story from "The Spanish Experiment.")
 
-### `npm start`
+![Search Mode](/public/images/HomepageRaton.PNG)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+# Reader
+Here, users can read and interact with stories. The stories have been rebuilt in a way that lets users hover over words to view their English language translation. Users can click a word to add it to their vocabulary list (words on their list appear green), or click on a word that is already on their list to indicate that they are no longer studying it and that it should be removed from their reading list.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+![Build Mode](/public/images/ReaderGif.mp4)
 
-### `npm test`
+# Technologies Used
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+![ERD](/public/images/RatonERD.PNG)
 
-### `npm run build`
+# Setting Up This Project:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Set up project
+Create Web API project in Visual Studio
+Create .gitignore
+Run git init from the root of your project
+Setup SQL Server
+Create a SQL folder in the root of your project
+Add a SQL script called 01_Db_Create.sql that creates your database (start by either copying and modifying the Gifter script or generate one from DBDiagram)
+(Optional) Add a SQL script called 02_Seed_Data.sql to insert seed data records into your database tables. Note You could also add the seed data in the first script if you prefer
+Run the script(s) to create and seed your database.
+NOTE: The script(s) should be written such that they can be re-run as needed to recreate your database. See the Gifter script for an example
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Set up Firebase
+Go to Firebase console and create a new project
+Enable a "Sign-in method"
+NOTE: In the course we used the Email/Password sign-in method.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Go to project settings to view API Key and Project ID (you'll need these in future steps)
+Server Side
+Install Nuget Packages (Copy from Tabloid.csproj and/or Gifter.csproj)
+Add connection string to appsettings.json
+Create Models
+Update appsettings.json to include your FirebaseProjectId
+Update Startup.cs to handle JWTs
+Update Startup.cs to call UseAuthentication before UseAuthorization
+Copy in the UserProfileRepository, IUserProfileRepository and UserProfileController from Tabloid/Gifter and modify as needed
+Register the UserProfileRepository with ASP.NET by calling services.AddTransient inside Startup.cs
+NOTE: Make sure to update the namespace of any classes you copy/paste from another project.
 
-### `npm run eject`
+Client Side
+Create client directory and run npx create-react-app .
+Setup proxy in package.json
+Install firebase and react router using npm install react-router-dom firebase
+Install whatever component library you want
+Create a .env.local file in your client folder (DON'T forget the leading .) and add the firebase API Key
+Update the index.js file to add the call to firebase.initializeApp
+Copy in UserProfileProvider.js, Login.js, Register.js from Tabloid (and optionally copy in the Login.css file if you want that bootstrap styling)
+Copy in ApplicationViews.js from Tabloid/Gifter and remove code that's not needed
+Modify App.js to use the Router, UserProfileProvider, and ApplicationViews components
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+#Run SQL Script available in this repo. Add Firebase users.
